@@ -37,9 +37,10 @@ html='''<!DOCTYPE html>
 <script>__ENGINE__</script>
 <script>__SCENE__</script>
 <script>__LABS__</script>
+<script>__DASHBOARD__</script>
 <script>__APP__</script>
 </body></html>'''
-for key,value in [('CSS',(src/'styles.css').read_text()),('CONTENT',jsjson(content)),('VIDEOS',jsjson(clips)),('ENGINESTRING',jsjson((src/'engine.js').read_text())),('ENGINE',(src/'engine.js').read_text()),('SCENE',(src/'scene.js').read_text()),('LABS',(src/'labs.js').read_text()),('APP',(src/'app.js').read_text())]:
+for key,value in [('CSS',(src/'styles.css').read_text()+'\n'+(src/'dashboard.css').read_text()),('CONTENT',jsjson(content)),('VIDEOS',jsjson(clips)),('ENGINESTRING',jsjson((src/'engine.js').read_text())),('ENGINE',(src/'engine.js').read_text()),('SCENE',(src/'scene.js').read_text()),('LABS',(src/'labs.js').read_text()),('DASHBOARD',(src/'dashboard.js').read_text()),('APP',(src/'app.js').read_text())]:
  html=html.replace('__'+key+'__',value)
 args.output.parent.mkdir(parents=True,exist_ok=True)
 args.output.write_text(html,encoding='utf-8')

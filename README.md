@@ -5,6 +5,14 @@ experiments, editable code, a hardware gallery, and curated simulator resources.
 
 ![Kinetic Studio preview](docs/preview.png)
 
+## Dashboard redesign
+
+A personalized overview, searchable module catalog, saved-course queue, live circuit
+challenge, practice timer and module evidence notebooks are included. Existing lessons,
+projects and labs remain available. [Implementation and deployment guide](docs/dashboard-redesign.md).
+
+[Validation results and environment limitations](docs/dashboard-validation.json).
+
 ## Quick start (Ubuntu / Linux / macOS)
 
 ```bash
@@ -18,7 +26,7 @@ No package install is required to browse the website.
 
 ```text
 .github/workflows/pages.yml    CI checks and GitHub Pages deployment
-src/                            Editable app JS, styles, lessons and engines
+src/                            App, dashboard views/styles, lessons and engines
 assets/                         Original locally bundled MP4 demonstrations
 native-labs/                    ROS, MCU, Python and model examples
 scripts/check_site.py           Release smoke check
@@ -49,7 +57,7 @@ Open http://localhost:8000/ . The `dist/` folder is generated, not committed.
 ### Test
 
 ```bash
-node --test tests/engine.test.js
+node --test tests/*.test.js
 python3 scripts/check_site.py
 ```
 
@@ -61,7 +69,7 @@ GitHub Actions also checks syntax and model XML and deploys the generated output
 2. Upload this repository's **contents** or use `git init` + `git push` to `main`.
 3. Go to **Settings > Pages > Build and deployment > Source: GitHub Actions**.
 4. Open **Actions**, check **Test and deploy GitHub Pages** succeeded.
-5. Visit `https://YOUR_USERNAME.github.io/kinetic-robotics-studio/`.
+5. Visit `https://darshak1just.github.io/kinetic-robotics-studio/`.
 
 Future pushes to `main` rebuild and publish. Pull requests run verification only.
 

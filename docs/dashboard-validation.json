@@ -1,0 +1,729 @@
+{
+  "edition": "Kinetic Studio dashboard redesign",
+  "build_date": "2026-10-24",
+  "source_baseline": "Kinetic_Robotics_Studio_GitHub_Ready.zip from this conversation; remote repository not fetched",
+  "baseline_archive_sha256": "17ac17cc3e15596d7beafb230310621e40187f57f8fe7f7918eeb5a83b10151e",
+  "unit_checks": {
+    "existing_engine_checks": 25,
+    "new_dashboard_tests": 20,
+    "failed": 0,
+    "note": "The existing engine script reports 25 assertions inside one Node test-file entry; dashboard.test.js reports 20 separate Node tests."
+  },
+  "browser_checks": {
+    "passed": 132,
+    "failed": 0,
+    "uncaught_page_errors": 0
+  },
+  "additional_validation": [
+    "Python compilation",
+    "JavaScript syntax check of every src/*.js",
+    "Production build",
+    "Production static HTML smoke check"
+  ],
+  "responsive_viewports": [
+    390,
+    768,
+    1440,
+    1920
+  ],
+  "preserved_content": {
+    "lesson_entries": 61,
+    "projects": 20,
+    "project_stage_routes": 100,
+    "modules": 12,
+    "browser_labs": 6,
+    "bundled_clips": 3
+  },
+  "environment_limits": [
+    "Browser navigation to HTTP origins was blocked; tests injected the actual generated HTML with Playwright set_content.",
+    "In-page state and JSON export/import were tested; localStorage persistence across real-origin reloads was not independently verified.",
+    "External media, YouTube, optional Pyodide downloads, hardware, native robotics installations and GPU training were not retested.",
+    "GitHub write access was not connected; nothing was committed or deployed to the live repository."
+  ],
+  "reports": {
+    "existing_smoke": {
+      "environment": "Headless Chromium with set_content; outgoing navigation is administratively disabled. Third-party media/live Python downloads were not validated. Browser persistence across reloads needs a real origin.",
+      "passed": 40,
+      "failed": 0,
+      "uncaught_errors": [],
+      "tests": [
+        {
+          "name": "Home renders all core counts",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Home has no horizontal overflow",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Circuit gives 5.91 mA by default",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Opening the circuit produces zero current",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "PID simulation advances actual state",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Pause freezes simulation time",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Rover state changes while running",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Arm reconstructs target",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Arm explicitly reports unreachable target",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Blocked path reports no route",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Clear grid restores route",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Q-learning completes 500 real episodes",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Q-learning evaluation is computed",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Curriculum has 12 modules",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Eight-semester scope dialog opens",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Quiz explains correct answer",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Quiz explains incorrect answer",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Plain-language glossary appears",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Project wiring stage includes a real connection table",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Native source opens editable without false compilation",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "JS worker executes and returns computed values",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Runtime exception is reported, not swallowed",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Infinite computation is terminated by timeout",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Palette setting updates",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Dark mode updates",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Reduced motion updates",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "All real-source assets are represented",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Photo failure retains source and explanations",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Hover updates the regional explanation",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Bundled MP4 metadata decodes",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Bundled clip duration is 8 s",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Bundled clip playback advances",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Global search returns relevant lesson",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Mobile home has no horizontal overflow",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Mobile pid has no horizontal overflow",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Mobile project has no horizontal overflow",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Mobile code has no horizontal overflow",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Mobile settings has no horizontal overflow",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Mobile lesson has no horizontal overflow",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No uncaught page errors",
+          "status": "passed",
+          "detail": true
+        }
+      ]
+    },
+    "full_content_regression": {
+      "environment": "Same headless local-content fixture as browser_smoke.py. Progress import/export was tested; origin-based reload persistence and external playback were not.",
+      "passed": 20,
+      "failed": 0,
+      "uncaught_errors": [],
+      "tests": [
+        {
+          "name": "All 61 lesson routes render their content",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "All 100 project-stage routes render",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "All 12 modules have the intended lesson sequence",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "JavaScript preset executes: circuit",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "JavaScript preset executes: pid",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "JavaScript preset executes: planner",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "JavaScript preset executes: learning",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Local video metadata: pid",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Local video metadata: arm",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Local video metadata: learning",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Simulation focus uses full viewport",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Escape exits simulation focus",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Guided slideshow advances to next stage",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Slideshow can be paused",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Comfort typography fits desktop",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Progress JSON restores learner settings",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Progress JSON restores notes and completion",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Restored notebook is editable",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Progress export is a valid portable JSON file",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No uncaught error during full content sweep",
+          "status": "passed",
+          "detail": true
+        }
+      ]
+    },
+    "new_dashboard": {
+      "environment": "Headless Chromium set_content fixture; external navigation blocked. In-page state and JSON export/import tested. Origin-backed reload persistence and remote media not verified.",
+      "passed": 72,
+      "failed": 0,
+      "uncaught_errors": [],
+      "tests": [
+        {
+          "name": "Overview routes to a personalized learning dashboard",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Overview preserves all 61 lessons and 20 projects",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Overview has six recommended modules",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "New overview navigation is correctly selected",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Autonomy filter shows four advanced modules",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Empty saved queue explains how to save a module",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Bookmark button exposes pressed state",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Saved queue immediately contains the bookmarked module",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Bookmark saved in learner state",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Catalog includes 12 modules",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Curriculum search filters by subtitle as well as name",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No-result search provides an explicit empty state",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Catalog saved filter retains prior bookmarks",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "List view is functional rather than decorative",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Expanded module has five existing lesson routes",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Module save control reflects bookmark state",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Arrow key moves focus without unexpected tab activation",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Enter activates module practice tab and renders lab link",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Evidence note is retained in learner state",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Evidence rubric saves independently of lesson completion",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Evidence downloads as readable Markdown",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Evidence survives route changes",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "LED challenge shows an actual computed default current",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Challenge requests a prediction before giving a pass",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Changing resistance immediately updates model output",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Unsafe target current is not marked as passing",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Correct prediction and resistance pass with numerical reasoning",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Challenge stores its inputs and outcome",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Wrong conceptual prediction does not pass despite current below limit",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Focus duration changes to 25 minutes",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Focus timer advances based on its deadline",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Pausing the focus timer freezes remaining time",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Reset clears the deadline without inventing a completed session",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "One elapsed timer records exactly one completed session",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Completed focus minutes update the overview immediately",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Timer completion is not duplicated on subsequent ticks",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Overview displays actual reviewed lesson count",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Next lesson advances beyond a completed lesson",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Progress export includes bookmarks and new evidence",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Progress import restores new dashboard fields",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Reduced motion stops decorative floating animation",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Dark palette is applied to the new dashboard",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "Comfort text setting does not create desktop overflow",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 390px /home",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 390px /learn",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 390px /module/02",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 390px /module/02/practice",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 390px /module/02/evidence",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 390px /sandbox/pid",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 390px /code",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 768px /home",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 768px /learn",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 768px /module/02",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 768px /module/02/practice",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 768px /module/02/evidence",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 768px /sandbox/pid",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 768px /code",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 1440px /home",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 1440px /learn",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 1440px /module/02",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 1440px /module/02/practice",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 1440px /module/02/evidence",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 1440px /sandbox/pid",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 1440px /code",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 1920px /home",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 1920px /learn",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 1920px /module/02",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 1920px /module/02/practice",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 1920px /module/02/evidence",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 1920px /sandbox/pid",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No horizontal overflow: 1920px /code",
+          "status": "passed",
+          "detail": true
+        },
+        {
+          "name": "No uncaught JavaScript error in dashboard interaction suite",
+          "status": "passed",
+          "detail": true
+        }
+      ]
+    }
+  }
+}
