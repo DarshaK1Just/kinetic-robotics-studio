@@ -26,6 +26,748 @@
 @media(min-width:1280px){.home-grid.module-grid,.home-grid.project-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.home-grid .module-body{padding:20px}.home-grid .module-art{height:140px}.home-grid .project-visual{height:150px}.home-grid .project-copy{padding:20px}.home-grid .project-copy h3{font-size:16px}.home-grid .project-copy p{font-size:12px}}
 @media(min-width:641px) and (max-width:1279px){.home-grid.module-grid,.home-grid.project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .studio-layout>div>p.sim-caption{position:static;margin:16px 3px;font:12px/1.8 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--muted);pointer-events:auto}.sim-focused{position:fixed;inset:0;z-index:60;background:var(--bg);overflow:auto;padding:20px 28px}.sim-focused>.crumb,.sim-focused>.footer,.sim-focused .page-heading p{display:none}.sim-focused .page-heading{margin:0 0 16px}.sim-focused .page-heading h1{font-size:24px}.sim-focused .control-panel{max-height:calc(100vh - 130px);overflow:auto}.sim-focused .sim-canvas,.sim-focused .sim-canvas-wrap{height:calc(100vh - 365px);min-height:240px}.sim-focused .lab-challenge,.sim-focused p.sim-caption{display:none}.sim-focused .filters{margin-bottom:15px}@media(max-width:950px){.sim-focused{padding:15px}.sim-focused .control-panel{max-height:none}.sim-focused .sim-canvas,.sim-focused .sim-canvas-wrap{height:330px}.sim-focused .page-heading .actions{margin-top:10px}}
+
+/* Kinetic / Studio edition: a spacious, responsive course workspace. */
+:root {
+  --bg: #f7f8fb; --panel: #fff; --panel2: #f1f2f7; --ink: #242335;
+  --muted: #727183; --line: #e8e8f0; --accent: #7357dc; --accent2: #a58bea;
+  --soft: #eee9fc; --mint: #e6f2ee; --blue: #e6eef9; --peach: #faeee4;
+  --amber: #faf1dd; --ks-outline: #ddd5f4; --ks-shadow: 0 8px 30px #29204405;
+}
+[data-mode="dark"] {
+  --bg: #15151f; --panel: #20202d; --panel2: #282837; --ink: #eeedf6;
+  --muted: #a8a6bc; --line: #353446; --soft: #343047; --ks-outline: #4b4168;
+  --mint: #273d37; --blue: #2b354b; --peach: #40332e; --amber: #403a29;
+  --ks-shadow: 0 8px 30px #0001;
+}
+body { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+.topbar { height: 76px; padding: 0 32px; gap: 26px; background: color-mix(in srgb,var(--panel) 92%,transparent); }
+.brand { font-size: 23px; letter-spacing: -.8px; gap: 11px; }
+.brand-icon { width: 36px; height: 36px; border-radius: 12px; transform: none; background: linear-gradient(145deg,#9d80ed,#7050cc); box-shadow: 0 4px 11px #7357dc29; }
+.brand-icon svg { transform: none; }
+.brand em { font-size: 9px; letter-spacing: 1.5px; margin-top: 1px; }
+.nav { gap: 2px; }
+.nav a { font-size: 12px; padding: 10px 13px; border-radius: 9px; }
+.nav a.active { background: var(--soft); }
+.top-actions { gap: 5px; }
+.avatar { background: var(--soft); color: var(--accent); border: 3px solid var(--panel); box-shadow: 0 0 0 1px var(--line); width: 36px; height: 36px; }
+.shell { max-width: 1920px; padding: 30px 32px 32px; }
+h1,.page-heading h1 { font-size: 28px; letter-spacing: -.9px; }
+.btn { border-radius: 10px; min-height: 39px; transition: background .18s, border-color .18s, box-shadow .18s, transform .18s; }
+.btn.primary { background: var(--accent); box-shadow: 0 4px 12px #7357dc24; }
+.btn.primary:hover { background: color-mix(in srgb,var(--accent) 90%,#30204f); box-shadow: 0 7px 18px #7357dc25; }
+.panel,.reader,.notes-panel { box-shadow: var(--ks-shadow); }
+.progress-bar { background: color-mix(in srgb,var(--muted) 12%,var(--panel)); height: 4px; border-radius: 10px; }
+.progress-bar i { background: var(--accent); transition: width .65s cubic-bezier(.2,.8,.2,1); }
+.ks-label { display: inline-block; font-size: 9px; font-weight: 720; letter-spacing: 1.35px; color: var(--muted); }
+.ks-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: 1.9px; color: var(--accent); margin-bottom: 9px; }
+.ks-page-top { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 26px; }
+.ks-page-top h1 { font-size: 27px; line-height: 1.3; margin-bottom: 7px; font-weight: 650; letter-spacing: -.9px; }
+.ks-page-top p:last-child { font-size: 12px; color: var(--muted); margin-bottom: 0; }
+.ks-sparkle { color: #c6a052; display: inline-flex; vertical-align: middle; margin-left: 5px; }
+.ks-sparkle .icon { width: 21px; height: 21px; }
+.ks-top-tools { display: flex; gap: 18px; align-items: center; }
+.ks-local { display: inline-flex; gap: 6px; font-size: 10px; color: var(--muted); align-items: center; }
+.ks-local .icon { width: 14px; color: #52967c; }
+.ks-dashboard-grid { display: grid; grid-template-columns: minmax(0,1fr) 296px; gap: 24px; align-items: start; }
+.ks-main-column,.ks-right-column { min-width: 0; }
+.ks-right-column { display: grid; gap: 20px; }
+.ks-hero { background: linear-gradient(105deg,#f0ecfc 0%,#f1edfc 41%,#e9e2f9 100%); min-height: 374px; border: 1px solid #e3dbf5; border-radius: 20px; display: grid; grid-template-columns: 1.1fr 1fr; position: relative; overflow: hidden; isolation: isolate; }
+.ks-hero:before { content: ''; position: absolute; width: 370px; height: 370px; border-radius: 50%; border: 1px solid #9d87c919; right: -10px; top: -30px; z-index: -1; box-shadow: 0 0 0 42px #ae97d808,0 0 0 90px #ae97d807; }
+.ks-hero-text { padding: 29px 0 30px 30px; z-index: 2; }
+.ks-hero-badge { display: inline-flex; align-items: center; gap: 7px; color: #7b64b5; font-size: 8px; font-weight: 720; letter-spacing: 1px; padding: 6px 8px; border: 1px solid #d9cbf0; border-radius: 5px; background: #f8f5ff8c; }
+.ks-hero-badge i { width: 5px; height: 5px; background: #8e70ce; border-radius: 50%; }
+.ks-hero h2 { color: #34294f; font-size: clamp(30px,2.7vw,44px); letter-spacing: -1.5px; line-height: 1.15; font-weight: 650; margin: 17px 0 16px; }
+.ks-hero h2 em { font-style: normal; color: #8262bf; }
+.ks-hero-text>p { font-size: 12px; line-height: 1.9; color: #7c6c92; max-width: 330px; margin-bottom: 23px; }
+.ks-main-cta { font-size: 11px; padding: 11px 15px; }
+.ks-text-link { color: var(--accent); font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; }
+.ks-text-link .icon { width: 15px; height: 15px; transition: transform .2s; }
+.ks-text-link:hover { text-decoration: none; }
+.ks-text-link:hover .icon { transform: translateX(3px); }
+.ks-hero-text .actions { gap: 17px; }
+.ks-hero-text .ks-text-link { color: #6b578d; font-size: 10px; }
+.ks-hero-facts { display: flex; gap: 14px; align-items: center; margin-top: 27px; color: #8a789d; font-size: 8px; flex-wrap: wrap; }
+.ks-hero-facts span { display: flex; align-items: center; gap: 4px; }
+.ks-hero-facts strong { color: #65547f; font-size: 12px; font-weight: 650; }
+.ks-robot-stage { position: relative; min-width: 0; }
+.ks-robot-stage .hero-lab { height: 100%; min-height: 374px; border: 0; background: transparent; border-radius: 0; box-shadow: none; }
+.ks-robot-stage .scene-canvas { height: 100%; min-height: 374px; cursor: grab; }
+.ks-robot-stage .scene-canvas:active { cursor: grabbing; }
+.ks-robot-stage .scene-top { display: none; }
+.ks-robot-stage .scene-bottom { left: 26px; right: 16px; bottom: 28px; justify-content: center; }
+.ks-robot-stage .scene-label { display: none; }
+.ks-robot-stage .segmented { padding: 3px; border-radius: 9px; background: #ffffffb5; border: 1px solid #fff8; box-shadow: 0 4px 12px #74618e0a; backdrop-filter: blur(8px); }
+.ks-robot-stage .segmented button { font-size: 9px; color: #89769e; padding: 7px 10px; border-radius: 6px; min-height: 29px; }
+.ks-robot-stage .segmented button.active { background: #fff; color: #7b59bc; box-shadow: 0 2px 6px #5941730b; }
+.ks-model-label { position: absolute; left: 0; right: 0; text-align: center; bottom: 10px; font-size: 6.5px; letter-spacing: .65px; color: #9b88b2; pointer-events: none; }
+.ks-float-tag { position: absolute; top: 28px; right: 22px; display: flex; gap: 8px; align-items: center; padding: 9px 12px; border: 1px solid #fff9; border-radius: 10px; background: #fffc; box-shadow: 0 8px 24px #7d59a411; backdrop-filter: blur(8px); pointer-events: none; animation: ks-float 6s ease-in-out infinite; }
+.ks-float-tag strong { display: block; font-size: 9px; color: #6b5981; font-weight: 650; }
+.ks-float-tag span:not(.ks-tag-icon) { display: block; font-size: 7.5px; color: #9d8baf; margin-top: 2px; }
+.ks-tag-icon { display: grid; place-items: center; background: #f0eafb; width: 27px; height: 27px; border-radius: 7px; color: #9478c9; }
+.ks-tag-icon .icon { width: 15px; height: 15px; }
+.ks-robot-stage .scene-tooltip { z-index: 3; font-size: 10px; max-width: 240px; background: #fff; color: #6d5a85; box-shadow: 0 8px 30px #49345d16; }
+.ks-robot-stage .scene-tooltip strong { color: #49385c; }
+.ks-stats { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 12px; margin-top: 18px; }
+.ks-stat { padding: 17px 14px; border: 1px solid var(--line); border-radius: 13px; background: var(--panel); display: flex; align-items: center; gap: 10px; min-width: 0; }
+.ks-stat-icon { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; background: var(--soft); color: var(--accent); flex: none; }
+.ks-stat-icon .icon { width: 16px; height: 16px; }
+.ks-stat:nth-child(2) .ks-stat-icon { background: var(--mint); color: #58977f; }
+.ks-stat:nth-child(3) .ks-stat-icon { background: var(--peach); color: #c0946e; }
+.ks-stat:nth-child(4) .ks-stat-icon { background: var(--blue); color: #7598c4; }
+.ks-stat strong { display: block; font-size: 21px; line-height: 1.2; letter-spacing: -.5px; font-weight: 650; }
+.ks-stat strong small { font-size: 10px; font-weight: 400; color: var(--muted); margin-left: 5px; letter-spacing: 0; }
+.ks-stat div>span { display: block; font-size: 9px; color: var(--muted); margin-top: 5px; }
+.ks-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin: 30px 0 17px; }
+.ks-section-heading .ks-label { font-size: 8px; letter-spacing: 1.4px; margin-bottom: 5px; }
+.ks-section-heading h2 { font-size: 21px; font-weight: 630; letter-spacing: -.55px; margin: 0; }
+.ks-home-filters { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 17px; }
+.ks-filter { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); padding: 7px 11px; background: transparent; border: 1px solid transparent; font-size: 10px; border-radius: 7px; min-height: 34px; }
+.ks-filter .icon { width: 13px; height: 13px; }
+.ks-filter.active { background: var(--soft); border-color: var(--ks-outline); color: var(--accent); font-weight: 650; }
+.ks-filter:hover { border-color: var(--ks-outline); }
+.ks-filter [data-saved-count] { margin-left: 4px; background: var(--panel); border-radius: 4px; min-width: 17px; padding: 1px 4px; font-size: 9px; }
+.ks-course-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+.ks-course.module-card { display: block; border: 1px solid var(--line); background: var(--panel); border-radius: 14px; overflow: hidden; min-width: 0; position: relative; box-shadow: none; transform: none; transition: box-shadow .25s, border-color .25s, transform .25s; }
+.ks-course:before { content: ''; position: absolute; inset: 0; border-radius: inherit; background: radial-gradient(340px circle at var(--pointer-x,50%) var(--pointer-y,0),#a793db0c,transparent); pointer-events: none; opacity: 0; transition: opacity .3s; }
+.ks-course:hover:before { opacity: 1; }
+.ks-course.module-card:hover { border-color: var(--ks-outline); box-shadow: 0 9px 24px #4735680b; transform: translateY(-3px); text-decoration: none; }
+.ks-course-art { height: 154px; position: relative; border-bottom: 1px solid color-mix(in srgb,var(--line) 60%,transparent); overflow: hidden; }
+.ks-course-art>a { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.ks-course-art .ks-art { width: 100%; max-width: 310px; height: 152px; padding-top: 10px; transition: transform .55s cubic-bezier(.2,.8,.2,1); }
+.ks-course:hover .ks-art { transform: scale(1.04) translateY(-2px); }
+.ks-color-mint { background: #eaf3ef; }
+.ks-color-lilac { background: #eeeafa; }
+.ks-color-amber { background: #f9f0de; }
+.ks-color-blue { background: #eaf0f9; }
+.ks-color-peach { background: #f9eee8; }
+.ks-course-number { position: absolute; left: 14px; top: 13px; font-size: 8px; color: #827a90; letter-spacing: .8px; }
+.ks-bookmark { position: absolute; top: 9px; right: 10px; width: 28px; height: 29px; border: 1px solid #ffffff70; border-radius: 7px; background: #ffffff80; padding: 6px; color: #897c9c; display: grid; place-items: center; }
+.ks-bookmark .icon { width: 14px; height: 14px; }
+.ks-bookmark.is-saved { color: #7958bd; background: #fff; }
+.ks-bookmark.is-saved .icon { fill: #d6c7f2; }
+.ks-course-format { position: absolute; bottom: 10px; left: 13px; font-size: 7px; color: #887b98; display: inline-flex; gap: 5px; align-items: center; background: #ffffff8a; padding: 4px 6px; border-radius: 4px; }
+.ks-course-format .icon { width: 10px; height: 10px; }
+.ks-course-body { padding: 18px 17px 0; }
+.ks-course-body .ks-label { font-size: 7px; letter-spacing: 1px; color: #9985b0; }
+.ks-course h3 { font-size: 14px; margin: 7px 0 7px; line-height: 1.4; font-weight: 650; letter-spacing: -.2px; }
+.ks-course h3 a { color: var(--ink); }
+.ks-course h3 a:hover { color: var(--accent); text-decoration: none; }
+.ks-course-body>p { font-size: 10px; line-height: 1.75; color: var(--muted); margin-bottom: 13px; min-height: 35px; }
+.ks-course-meta { display: flex; align-items: center; gap: 13px; font-size: 9px; color: var(--muted); }
+.ks-course-meta span { display: inline-flex; align-items: center; gap: 5px; }
+.ks-course-meta .icon { width: 12px; height: 12px; }
+.ks-course-progress { display: flex; justify-content: space-between; font-size: 8px; color: var(--muted); margin: 15px 0 6px; }
+.ks-course-progress span:last-child { color: var(--accent); font-weight: 600; }
+.ks-course .progress-bar { height: 3px; }
+.ks-course-foot { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin: 16px -17px 0; padding: 12px 17px; border-top: 1px solid var(--line); }
+.ks-course-foot>a { color: var(--accent); font-size: 9px; font-weight: 650; display: inline-flex; align-items: center; gap: 7px; }
+.ks-course-foot .icon { width: 12px; height: 12px; }
+.ks-duration { font-size: 8px; color: var(--muted); white-space: nowrap; }
+.ks-lab-tiles { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+.ks-lab-tile { padding: 20px; border: 1px solid #7b688b0c; border-radius: 13px; color: #574b67; display: block; transition: transform .2s,box-shadow .2s; }
+.ks-lab-tile:hover { transform: translateY(-3px); text-decoration: none; box-shadow: 0 7px 22px #493b550a; }
+.ks-lab-icon { display: grid; place-items: center; width: 35px; height: 35px; background: #ffffff91; border-radius: 10px; color: #8973a5; margin-bottom: 13px; }
+.ks-lab-tile h3 { font-size: 13px; font-weight: 650; }
+.ks-lab-tile p { color: #8b7c9a; font-size: 10px; line-height: 1.8; margin-bottom: 19px; }
+.ks-lab-open { display: flex; align-items: center; justify-content: space-between; font-size: 9px; color: #77628e; font-weight: 650; }
+.ks-lab-open .icon { width: 13px; height: 13px; }
+.ks-project-banner { display: flex; align-items: center; gap: 20px; margin-top: 24px; padding: 24px; border-radius: 16px; background: var(--panel); border: 1px solid var(--line); }
+.ks-project-mark { flex: none; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 15px; background: var(--soft); color: var(--accent); }
+.ks-project-banner h2 { font-size: 18px; margin: 6px 0; }
+.ks-project-banner p { font-size: 10px; color: var(--muted); margin: 0; }
+.ks-project-banner .btn { margin-left: auto; white-space: nowrap; font-size: 11px; }
+.ks-next-card,.ks-challenge-card,.ks-timer-card,.ks-mindset-card { border: 1px solid var(--line); border-radius: 16px; padding: 21px; background: var(--panel); }
+.ks-card-heading { display: flex; align-items: center; justify-content: space-between; gap: 9px; margin-bottom: 19px; }
+.ks-card-heading>.icon { width: 16px; height: 16px; color: var(--muted); }
+.ks-card-heading .ks-label { font-size: 8px; letter-spacing: 1.25px; }
+.ks-tiny-badge { display: inline-block; font-size: 7px; padding: 4px 6px; background: var(--soft); color: var(--accent); border-radius: 4px; letter-spacing: .5px; white-space: nowrap; }
+.ks-next-symbol { display: grid; place-items: center; width: 36px; height: 36px; background: var(--soft); color: var(--accent); border-radius: 10px; margin-bottom: 14px; }
+.ks-next-symbol .icon { width: 18px; height: 18px; }
+.ks-next-card h2 { font-size: 18px; letter-spacing: -.35px; line-height: 1.4; margin-bottom: 9px; }
+.ks-next-card>p { color: var(--muted); font-size: 11px; line-height: 1.8; margin-bottom: 15px; }
+.ks-next-meta { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; font-size: 8px; color: var(--muted); margin-bottom: 16px; line-height: 1.7; }
+.ks-next-meta .icon { width: 11px; height: 11px; }
+.ks-next-card>.btn { width: 100%; justify-content: space-between; font-size: 10px; padding: 10px 13px; }
+.ks-next-card>.btn .icon { width: 14px; height: 14px; }
+.ks-next-progress { display: flex; justify-content: space-between; font-size: 8px; color: var(--muted); margin: 19px 0 8px; }
+.ks-next-progress strong { font-weight: 600; color: var(--ink); }
+.ks-challenge-card { background: linear-gradient(145deg,#faf8fe,#f4f0fb); border-color: #e4dcf1; }
+.ks-challenge-card .ks-label { color: #9581ad; }
+.ks-challenge-card h2 { font-size: 20px; color: #59456d; margin-bottom: 5px; letter-spacing: -.45px; }
+.ks-challenge-card>p { color: #91809f; font-size: 10px; line-height: 1.8; }
+.ks-mini-circuit { margin: 16px -6px 9px; }
+.ks-mini-circuit svg { display: block; width: 100%; }
+.ks-challenge-value { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #b8a3d22b; padding-top: 14px; font-size: 9px; color: #9b8aa9; }
+.ks-challenge-value output { font-size: 26px; color: #7859a5; font-variant-numeric: tabular-nums; letter-spacing: -1px; font-weight: 500; }
+.ks-challenge-value output small { font-size: 11px; letter-spacing: 0; }
+.ks-challenge-value output.over-limit { color: #a65a3e; }
+.ks-range-label { display: flex; justify-content: space-between; font-size: 9px; color: #9683a7; margin: 16px 0 5px; }
+.ks-range-label strong { font-weight: 600; color: #8b709f; }
+#ks-resistance { height: 18px; display: block; cursor: pointer; accent-color: #9872c8; }
+.ks-range-extents { display: flex; justify-content: space-between; font-size: 8px; color: #a28fb1; margin-top: 3px; }
+.ks-prediction { border: 0; padding: 0; margin: 18px 0 12px; font-size: 9px; color: #8f779d; display: flex; flex-wrap: wrap; gap: 8px; }
+.ks-prediction legend { margin-bottom: 8px; font-weight: 600; }
+.ks-prediction label { display: flex; align-items: center; gap: 4px; }
+.ks-prediction input { accent-color: #9371b5; margin: 0; width: 11px; height: 11px; }
+.ks-challenge-check { background: #fff9; border-color: #ded3eb; color: #8c6ba4; width: 100%; justify-content: space-between; font-size: 9px; min-height: 34px; padding: 9px 12px; }
+.ks-challenge-check .icon { width: 12px; height: 12px; }
+.ks-micro { color: var(--muted); font-size: 9px; line-height: 1.8; margin: 13px 0 0; }
+.ks-challenge-card>.ks-micro { color: #9c8ca9; font-size: 8px; margin-bottom: 0; }
+.ks-feedback { padding: 12px; border-radius: 9px; border: 1px solid #e0d2ec; font-size: 10px; line-height: 1.8; color: #886696; background: #faf4ff; margin-top: 12px; }
+.ks-feedback.is-correct { background: #e8f5ee; border-color: #bedbc9; color: #466f59; }
+.ks-feedback.is-retry { background: #fff2e8; border-color: #e8c8ac; color: #946a49; }
+.ks-timer-card { background: var(--panel); }
+.ks-timer-face { text-align: center; margin: 15px 0; }
+.ks-timer-face>strong { display: block; font-size: 41px; font-weight: 440; letter-spacing: -1.5px; color: var(--ink); line-height: 1.4; font-variant-numeric: tabular-nums; }
+.ks-timer-face>span { color: var(--muted); font-size: 9px; }
+.ks-timer-presets { display: flex; justify-content: center; gap: 5px; margin: 17px 0; }
+.ks-timer-presets button { padding: 5px 10px; background: var(--bg); border: 1px solid transparent; font-size: 9px; color: var(--muted); border-radius: 5px; }
+.ks-timer-presets button.active { background: var(--soft); color: var(--accent); border-color: var(--ks-outline); }
+.ks-timer-actions { display: flex; gap: 6px; }
+.ks-timer-actions .btn { flex: 1; font-size: 9px; min-height: 33px; }
+.ks-timer-actions .icon { width: 13px; height: 13px; }
+.ks-timer-actions .icon-btn { padding: 8px; }
+.ks-timer-card .ks-micro { text-align: center; font-size: 8px; }
+.ks-mindset-card { background: #edf3f0; border-color: #e0e9e2; }
+.ks-mindset-card .ks-label { color: #8ba293; }
+.ks-mindset-card blockquote { margin: 20px 0; color: #697d70; font-size: 18px; font-weight: 500; line-height: 1.6; letter-spacing: -.4px; }
+.ks-mindset-card em { color: #8ba594; font-style: normal; }
+.ks-mindset-card a { color: #738e7c; font-size: 10px; }
+.ks-empty { grid-column: 1/-1; text-align: center; padding: 45px 24px; border: 1px dashed var(--ks-outline); border-radius: 14px; background: var(--panel); }
+.ks-empty>.icon { width: 26px; height: 26px; color: var(--accent); margin-bottom: 13px; }
+.ks-empty h3 { font-size: 17px; }
+.ks-empty p { font-size: 12px; color: var(--muted); margin: 0; }
+/* Course catalog */
+.ks-path-overview { padding: 32px 40px; border-radius: 19px; border: 1px solid var(--ks-outline); background: linear-gradient(110deg,var(--soft),var(--panel)); display: grid; grid-template-columns: minmax(0,1fr) 270px; gap: 30px; }
+.ks-path-overview .ks-label { color: var(--accent); }
+.ks-path-overview h2 { font-size: 33px; line-height: 1.24; letter-spacing: -1px; margin: 14px 0; font-weight: 620; }
+.ks-path-overview h2 em { color: var(--accent); font-style: normal; }
+.ks-path-overview p { max-width: 530px; font-size: 12px; line-height: 1.9; color: var(--muted); }
+.ks-path-steps { display: flex; align-items: center; gap: 13px; margin-top: 25px; }
+.ks-path-steps span { font-size: 10px; color: var(--muted); display: inline-flex; align-items: center; gap: 7px; }
+.ks-path-steps b { display: grid; place-items: center; border: 1px solid var(--ks-outline); width: 24px; height: 24px; border-radius: 50%; font-size: 8px; background: var(--panel); color: var(--accent); }
+.ks-path-steps i { width: 18px; height: 1px; background: var(--ks-outline); }
+.ks-path-progress { text-align: center; display: flex; flex-direction: column; align-items: center; padding-left: 20px; border-left: 1px solid var(--ks-outline); }
+.ks-path-progress p { margin: 9px 0 15px; font-size: 11px; }
+.ks-path-progress p strong { color: var(--ink); font-weight: 600; }
+.ks-path-progress p span { font-size: 9px; }
+.ks-path-progress .btn { font-size: 11px; }
+.ks-ring { width: var(--ring-size); height: var(--ring-size); position: relative; flex: none; }
+.ks-ring svg { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+.ks-ring-track { fill: none; stroke: var(--ks-outline); stroke-width: 4; }
+.ks-ring-value { fill: none; stroke: var(--accent); stroke-width: 4; stroke-linecap: round; transition: stroke-dashoffset .8s ease; }
+.ks-ring>div { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+.ks-ring strong { font-size: 30px; letter-spacing: -1px; font-weight: 500; line-height: 1.4; }
+.ks-ring strong small { font-size: 14px; }
+.ks-ring span { font-size: 9px; color: var(--muted); }
+.ks-course-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin: 28px 0 10px; }
+.ks-course-toolbar .ks-home-filters { margin: 0; }
+.ks-catalog-tools { display: flex; align-items: center; gap: 10px; }
+.ks-module-search { display: flex; align-items: center; gap: 7px; padding: 0 11px; border: 1px solid var(--line); border-radius: 9px; background: var(--panel); }
+.ks-module-search>.icon { width: 13px; height: 13px; color: var(--muted); }
+.ks-module-search input { background: transparent; border: 0; padding: 9px 0; width: 155px; font-size: 10px; outline-offset: 7px; }
+.ks-view-switch { display: flex; padding: 3px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+.ks-view-switch button { display: grid; place-items: center; padding: 5px; background: transparent; border: 0; border-radius: 5px; color: var(--muted); }
+.ks-view-switch .icon { width: 15px; height: 15px; }
+.ks-view-switch .active { color: var(--accent); background: var(--soft); }
+.ks-results-count { color: var(--muted); font-size: 9px; margin-bottom: 16px; padding-left: 2px; }
+.ks-catalog-grid { grid-template-columns: repeat(4,minmax(0,1fr)); }
+.ks-catalog-grid .ks-course-art { height: 165px; }
+.ks-catalog-grid .ks-course-art .ks-art { height: 165px; }
+.ks-catalog-grid .ks-course h3 { font-size: 16px; }
+.ks-catalog-grid .ks-course-body>p { font-size: 11px; }
+.ks-list-view { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.ks-list-view .ks-course { display: grid; grid-template-columns: 175px 1fr; }
+.ks-list-view .ks-course-art { height: 100%; border-bottom: 0; border-right: 1px solid var(--line); }
+.ks-list-view .ks-course-art .ks-art { height: 155px; margin-top: 10px; }
+.ks-list-view .ks-course-body>p { min-height: 0; }
+.ks-curriculum>.quality-note { margin-top: 25px; padding: 20px; line-height: 1.9; }
+/* Expanded module studio */
+.ks-back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); margin-bottom: 19px; }
+.ks-back-link .icon { width: 15px; height: 15px; }
+.ks-module-hero { padding: 32px 40px; border: 1px solid color-mix(in srgb,var(--line) 70%,var(--accent)); border-radius: 18px; display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; overflow: hidden; }
+.ks-module-hero .ks-label { color: #8b7c9d; }
+.ks-module-hero h1 { font-size: 34px; line-height: 1.25; margin: 12px 0; color: #4e405e; font-weight: 620; }
+.ks-module-hero>div>p { font-size: 13px; color: #8b7b99; }
+.ks-module-facts { display: flex; align-items: center; gap: 20px; color: #8b7c9d; font-size: 10px; margin: 19px 0 23px; flex-wrap: wrap; }
+.ks-module-facts span { display: inline-flex; align-items: center; gap: 5px; }
+.ks-module-facts .icon { width: 14px; height: 14px; }
+.ks-module-hero .btn { font-size: 11px; }
+.ks-save-module { background: #ffffff9e; border-color: #fff; color: #8a6d9b; }
+.ks-save-module.is-saved .icon { fill: #e0cdee; }
+.ks-module-art { position: relative; display: grid; place-items: center; }
+.ks-module-art .ks-art { width: 100%; height: 200px; max-width: 390px; }
+.ks-module-art>span { font-size: 7px; letter-spacing: 1.2px; color: #a793b4; }
+.ks-module-layout { display: grid; grid-template-columns: minmax(0,1fr) 300px; gap: 25px; margin-top: 26px; align-items: start; }
+.ks-module-content { background: var(--panel); border: 1px solid var(--line); border-radius: 15px; overflow: hidden; min-width: 0; }
+.ks-module-tabs { display: flex; gap: 22px; padding: 0 26px; border-bottom: 1px solid var(--line); }
+.ks-module-tabs button { border: 0; border-bottom: 2px solid transparent; border-radius: 0; padding: 18px 4px; background: transparent; color: var(--muted); font-size: 12px; }
+.ks-module-tabs button[aria-selected="true"] { border-color: var(--accent); color: var(--accent); font-weight: 650; }
+.ks-module-tabs button span { font-size: 9px; padding: 2px 5px; background: var(--soft); border-radius: 4px; margin-left: 5px; }
+#ks-module-panel { padding: 27px; outline-offset: -4px; }
+.ks-list-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; gap: 10px; }
+.ks-list-head h2 { font-size: 18px; margin: 0; }
+.ks-list-head>span { font-size: 10px; color: var(--muted); white-space: nowrap; }
+.ks-path-lesson { display: flex; align-items: center; gap: 16px; padding: 20px 16px; margin-bottom: 12px; border: 1px solid var(--line); border-radius: 12px; color: var(--ink); transition: background .18s,border-color .18s; }
+.ks-path-lesson:last-child { margin-bottom: 0; }
+.ks-path-lesson:hover { text-decoration: none; background: var(--bg); border-color: var(--ks-outline); }
+.ks-path-lesson.is-next { background: color-mix(in srgb,var(--soft) 24%,var(--panel)); border-color: var(--ks-outline); }
+.ks-step-number { height: 37px; width: 37px; border-radius: 10px; display: grid; place-items: center; background: var(--panel2); color: var(--muted); font-size: 11px; flex: none; }
+.is-next .ks-step-number { background: var(--soft); color: var(--accent); }
+.is-complete .ks-step-number { color: #5c9b81; background: var(--mint); }
+.ks-lesson-type { font-size: 8px; letter-spacing: .8px; color: var(--muted); display: flex; align-items: center; gap: 9px; }
+.ks-lesson-type>span { padding: 2px 5px; background: var(--soft); color: var(--accent); border-radius: 3px; font-size: 7px; }
+.ks-path-lesson h3 { font-size: 14px; margin: 6px 0; font-weight: 620; }
+.ks-path-lesson p { font-size: 10px; line-height: 1.8; color: var(--muted); margin: 0; }
+.ks-lesson-foot { display: flex; align-items: center; gap: 15px; font-size: 8px; color: var(--muted); margin-top: 10px; }
+.ks-lesson-foot span { display: inline-flex; align-items: center; gap: 4px; }
+.ks-lesson-foot .icon { width: 11px; height: 11px; }
+.ks-row-arrow { margin-left: auto; color: var(--muted); }
+.ks-row-arrow .icon { width: 16px; height: 16px; }
+.ks-module-aside { display: grid; gap: 17px; }
+.ks-module-progress { padding: 24px; background: var(--panel); border: 1px solid var(--line); border-radius: 15px; text-align: center; }
+.ks-module-progress .ks-ring { margin: 0 auto 8px; }
+.ks-module-progress h3 { font-size: 14px; margin-top: 10px; }
+.ks-module-progress p { color: var(--muted); font-size: 10px; line-height: 1.8; }
+.ks-module-goal { padding: 24px; border-radius: 15px; background: var(--soft); border: 1px solid var(--ks-outline); }
+.ks-module-goal .ks-label { color: var(--accent); font-size: 8px; }
+.ks-module-goal h3 { font-size: 17px; line-height: 1.5; margin: 13px 0 22px; }
+.ks-atlas-shortcut { display: flex; gap: 11px; align-items: center; padding: 18px; border: 1px solid var(--line); background: var(--panel); border-radius: 12px; color: var(--muted); }
+.ks-atlas-shortcut strong { font-size: 10px; display: block; color: var(--ink); }
+.ks-atlas-shortcut small { font-size: 8px; display: block; margin-top: 3px; }
+.ks-atlas-shortcut>.icon:last-child { margin-left: auto; width: 13px; }
+.ks-practice-intro>.ks-label,.ks-evidence>.ks-label { color: var(--accent); margin: 4px 0 13px; }
+.ks-practice-intro>h2,.ks-evidence>h2 { font-size: 23px; }
+.ks-practice-intro>p,.ks-evidence>p { font-size: 12px; color: var(--muted); line-height: 1.9; }
+.ks-practice-art { background: var(--soft); border: 1px solid var(--ks-outline); border-radius: 13px; margin: 23px 0; padding: 20px; display: flex; align-items: center; justify-content: space-around; gap: 20px; }
+.ks-practice-art .ks-art { height: 170px; width: 55%; }
+.ks-practice-art .btn { font-size: 11px; white-space: nowrap; }
+.ks-practice-prompts { display: grid; grid-template-columns: repeat(3,1fr); gap: 17px; margin: 20px 0 28px; }
+.ks-practice-prompts b { color: var(--accent); font-size: 10px; }
+.ks-practice-prompts h3 { font-size: 12px; margin: 9px 0; }
+.ks-practice-prompts p { font-size: 10px; color: var(--muted); line-height: 1.9; }
+.ks-related-project { display: flex; align-items: center; gap: 13px; border: 1px solid var(--line); border-radius: 10px; padding: 14px; margin-bottom: 10px; }
+.ks-related-project span { flex: 1; }
+.ks-related-project strong { font-size: 12px; font-weight: 600; display: block; }
+.ks-related-project small { color: var(--muted); font-size: 9px; display: block; margin-top: 4px; }
+.ks-evidence-gate { border-left: 3px solid var(--accent); background: var(--soft); padding: 17px 20px; border-radius: 0 10px 10px 0; }
+.ks-evidence-checks { border: 1px solid var(--line); border-radius: 11px; padding: 17px; margin: 22px 0; }
+.ks-evidence-checks legend { font-size: 10px; color: var(--muted); padding: 0 6px; }
+.ks-evidence-checks label { display: flex; align-items: start; gap: 9px; font-size: 11px; color: var(--muted); line-height: 1.8; margin: 10px 0; }
+.ks-evidence-checks input { margin-top: 3px; }
+.ks-evidence>textarea { width: 100%; resize: vertical; font-size: 12px; line-height: 1.9; margin-top: 10px; }
+.ks-evidence-actions { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-top: 13px; }
+.ks-evidence-actions .ks-micro { margin: 0; }
+.ks-evidence-actions .btn { white-space: nowrap; font-size: 10px; }
+/* Finishing treatment for existing workspaces; all original functionality remains. */
+.reader-heading { background: linear-gradient(115deg,var(--panel),color-mix(in srgb,var(--soft) 35%,var(--panel))); }
+.reader-heading h1 { font-size: 28px; }
+.reader-tabs { background: var(--panel); }
+.lesson-nav a.active { box-shadow: inset 3px 0 0 var(--accent); }
+.stage-steps { gap: 5px; }
+.stage-steps a { border-radius: 9px!important; font-size: 12px; min-height: 48px; }
+.stage-steps a.active { box-shadow: 0 5px 16px #7357dc1f; }
+.project-card,.asset-card,.resource-card { box-shadow: var(--ks-shadow); }
+.section-heading { margin-top: 30px; }
+.footer { margin-top: 32px; font-size: 9px; }
+.dialog { border: 1px solid var(--line); box-shadow: 0 24px 80px #25203732; }
+.dialog::backdrop { background: #29233755; backdrop-filter: blur(7px); }
+.toast { background: #322945; color: #f5efff; box-shadow: 0 10px 30px #23163226; }
+.slide-in { animation: ks-appear .3s cubic-bezier(.2,.8,.2,1); }
+.ks-course { animation: ks-appear .36s both; animation-delay: calc(var(--card-order,0)*25ms); }
+.ks-course:hover .ks-flow,.ks-module-art .ks-flow { animation: ks-flow 7s linear infinite; }
+.ks-course:hover .ks-light-ray { animation: ks-breathe 2s ease-in-out infinite; }
+@keyframes ks-appear { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes ks-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes ks-flow { to { stroke-dashoffset: -120; } }
+@keyframes ks-breathe { 50% { opacity: .35; } }
+/* Dark appearance preserves readable contrast rather than inverting photography. */
+[data-mode="dark"] .ks-hero { background: linear-gradient(120deg,#2e273e,#3a2e50); border-color: #4d3a69; }
+[data-mode="dark"] .ks-hero h2 { color: #e7ddf4; }
+[data-mode="dark"] .ks-hero h2 em { color: #baa1e8; }
+[data-mode="dark"] .ks-hero-text>p,[data-mode="dark"] .ks-hero-text .ks-text-link,[data-mode="dark"] .ks-hero-facts { color: #b4a3c8; }
+[data-mode="dark"] .ks-hero-facts strong { color: #d0bce6; }
+[data-mode="dark"] .ks-hero-badge { background: #4d39632b; border-color: #67517d; color: #c6adde; }
+[data-mode="dark"] .ks-color-mint { background: #2d4139; }
+[data-mode="dark"] .ks-color-amber { background: #48402c; }
+[data-mode="dark"] .ks-color-blue { background: #2c394e; }
+[data-mode="dark"] .ks-color-peach { background: #493b36; }
+[data-mode="dark"] .ks-color-lilac { background: #383046; }
+[data-mode="dark"] .ks-course-number,[data-mode="dark"] .ks-module-hero .ks-label,[data-mode="dark"] .ks-module-facts { color: #c4b6d1; }
+[data-mode="dark"] .ks-module-hero h1,[data-mode="dark"] .ks-lab-tile h3 { color: #e6dbf0; }
+[data-mode="dark"] .ks-module-hero>div>p,[data-mode="dark"] .ks-lab-tile p,[data-mode="dark"] .ks-lab-open { color: #b7a9c6; }
+[data-mode="dark"] .ks-challenge-card { background: #32283d; border-color: #51405e; }
+[data-mode="dark"] .ks-challenge-card h2 { color: #e3cfef; }
+[data-mode="dark"] .ks-challenge-card>p,[data-mode="dark"] .ks-challenge-card .ks-label,[data-mode="dark"] .ks-range-label,[data-mode="dark"] .ks-range-label strong,[data-mode="dark"] .ks-prediction { color: #bba5c7; }
+[data-mode="dark"] .ks-challenge-value output { color: #d0abe8; }
+[data-mode="dark"] .ks-challenge-check { background: #483653; border-color: #654c73; color: #d0b3e0; }
+[data-mode="dark"] .ks-mindset-card { background: #273b33; border-color: #385143; }
+[data-mode="dark"] .ks-mindset-card blockquote { color: #b7cdbf; }
+[data-mode="dark"] .ks-mindset-card a { color: #b0ceb9; }
+/* Responsive layout: wide workspace, no fixed learning sidebar. */
+@media(min-width:1650px) {
+  .shell { padding-left: 44px; padding-right: 44px; }
+  .ks-dashboard-grid { grid-template-columns: minmax(0,1fr) 320px; gap: 28px; }
+  .ks-hero { grid-template-columns: 1fr 1.1fr; min-height: 410px; }
+  .ks-hero-text { padding: 38px; }
+  .ks-robot-stage .hero-lab,.ks-robot-stage .scene-canvas { min-height: 410px; }
+  .ks-hero h2 { font-size: 46px; }
+  .ks-course-art,.ks-course-art .ks-art { height: 180px; }
+  .ks-course h3 { font-size: 17px; }
+  .ks-course-body>p { font-size: 11px; }
+  .ks-course-meta,.ks-course-foot>a { font-size: 10px; }
+  .ks-catalog-grid { grid-template-columns: repeat(4,minmax(0,1fr)); }
+}
+@media(max-width:1190px) {
+  .topbar { padding: 0 23px; gap: 14px; }
+  .nav a { padding: 9px 10px; font-size: 11px; }
+  .brand { font-size: 21px; }
+  .shell { padding: 25px 24px; }
+  .ks-dashboard-grid { grid-template-columns: minmax(0,1fr) 265px; gap: 18px; }
+  .ks-hero-text { padding-left: 24px; }
+  .ks-hero { grid-template-columns: 1.2fr 1fr; }
+  .ks-hero h2 { font-size: 32px; }
+  .ks-hero-badge { font-size: 6.5px; }
+  .ks-hero-text>p { font-size: 11px; }
+  .ks-hero .actions { gap: 9px; }
+  .ks-hero-facts { gap: 9px; margin-top: 20px; }
+  .ks-float-tag { right: 10px; top: 30px; padding: 7px; }
+  .ks-float-tag strong { font-size: 8px; }
+  .ks-float-tag span:not(.ks-tag-icon) { font-size: 6.5px; }
+  .ks-robot-stage .scene-bottom { left: 0; right: 0; }
+  .ks-hero .ks-text-link { font-size: 9px; }
+  .ks-top-tools .ks-local { display: none; }
+  .ks-stat { padding: 14px 10px; gap: 8px; }
+  .ks-stat-icon { width: 28px; height: 28px; border-radius: 8px; }
+  .ks-stat strong { font-size: 18px; }
+  .ks-stat div>span { font-size: 8px; }
+  .ks-course-grid { gap: 12px; }
+  .ks-course-body { padding: 15px 13px 0; }
+  .ks-course-foot { padding: 11px 13px; margin-left: -13px; margin-right: -13px; }
+  .ks-course h3 { font-size: 13px; }
+  .ks-course-art,.ks-course-art .ks-art { height: 137px; }
+  .ks-course-meta { gap: 8px; font-size: 8px; }
+  .ks-course-foot>a { font-size: 8px; }
+  .ks-duration { font-size: 7px; }
+  .ks-next-card,.ks-challenge-card,.ks-timer-card,.ks-mindset-card { padding: 18px; }
+  .ks-section-heading h2 { font-size: 19px; }
+  .ks-catalog-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .ks-catalog-grid.ks-list-view { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .ks-list-view .ks-course { grid-template-columns: 140px 1fr; }
+  .ks-course-toolbar { align-items: flex-start; flex-wrap: wrap; }
+}
+@media(max-width:950px) {
+  .topbar { display: grid; grid-template-columns: auto 1fr; height: 112px; padding: 12px 20px 0; gap: 3px 16px; }
+  .topbar .brand { grid-row: 1; grid-column: 1; font-size: 21px; }
+  .top-actions { grid-row: 1; grid-column: 2; justify-self: end; }
+  .topbar .nav { grid-row: 2; grid-column: 1/-1; justify-content: flex-start; width: 100%; overflow-x: auto; padding: 7px 0 8px; min-height: 44px; }
+  .nav a { font-size: 11px; padding: 8px 13px; }
+  .ks-dashboard-grid { grid-template-columns: minmax(0,1fr); }
+  .ks-right-column { grid-template-columns: repeat(2,minmax(0,1fr)); align-items: start; }
+  .ks-next-card { min-height: 330px; }
+  .ks-challenge-card { grid-column: 2; grid-row: 1/3; }
+  .ks-timer-card { grid-column: 1; grid-row: 2; }
+  .ks-mindset-card { grid-column: 1/-1; }
+  .ks-mindset-card blockquote br { display: none; }
+  .ks-mindset-card blockquote { margin: 13px 0; font-size: 19px; }
+  .ks-mindset-card blockquote em { margin-left: 5px; }
+  .ks-hero { grid-template-columns: 1.1fr 1fr; }
+  .ks-hero h2 { font-size: 38px; }
+  .ks-hero-badge { font-size: 8px; }
+  .ks-hero-text { padding-left: 30px; }
+  .ks-hero-text>p { font-size: 12px; }
+  .ks-hero-facts { font-size: 8px; gap: 14px; }
+  .ks-course h3 { font-size: 15px; }
+  .ks-course-body>p { font-size: 11px; }
+  .ks-course-meta { font-size: 9px; }
+  .ks-course-art,.ks-course-art .ks-art { height: 157px; }
+  .ks-stat { padding: 17px 14px; }
+  .ks-stat strong { font-size: 22px; }
+  .ks-stat div>span { font-size: 9px; }
+  .ks-catalog-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .ks-catalog-grid.ks-list-view { grid-template-columns: 1fr; }
+  .ks-list-view .ks-course { grid-template-columns: 190px 1fr; }
+  .ks-path-overview { padding: 28px; grid-template-columns: 1fr 210px; }
+  .ks-path-overview h2 { font-size: 28px; }
+  .ks-path-steps { flex-wrap: wrap; gap: 8px; }
+  .ks-module-layout { grid-template-columns: minmax(0,1fr) 245px; gap: 16px; }
+  .ks-module-hero { padding: 27px; }
+  .ks-module-hero h1 { font-size: 28px; }
+  .ks-module-facts { gap: 12px; }
+  #ks-module-panel { padding: 20px; }
+  .ks-path-lesson { align-items: flex-start; padding: 16px 13px; gap: 10px; }
+  .ks-path-lesson h3 { font-size: 13px; }
+  .ks-path-lesson p { font-size: 10px; }
+  .ks-row-arrow { display: none; }
+  .ks-module-goal,.ks-module-progress { padding: 20px; }
+  .ks-practice-art { flex-direction: column; }
+  .ks-practice-art .ks-art { width: 100%; }
+}
+@media(max-width:640px) {
+  .shell { padding: 22px 16px 28px; }
+  .topbar { padding-left: 16px; padding-right: 16px; }
+  .top-actions .icon-btn { padding: 8px; }
+  .avatar { width: 32px; height: 32px; font-size: 10px; }
+  .ks-page-top { gap: 12px; align-items: flex-start; margin-bottom: 20px; }
+  .ks-page-top h1 { font-size: 23px; }
+  .ks-page-top p:last-child { font-size: 11px; line-height: 1.8; max-width: 320px; }
+  .ks-eyebrow { font-size: 8px; }
+  .ks-top-tools { display: none; }
+  .ks-hero { display: block; min-height: 0; }
+  .ks-hero-text { padding: 26px 26px 0; }
+  .ks-hero h2 { font-size: 37px; margin-top: 16px; }
+  .ks-hero-text>p { max-width: 100%; margin-bottom: 18px; }
+  .ks-hero-facts { margin-top: 21px; gap: 15px; }
+  .ks-robot-stage .hero-lab,.ks-robot-stage .scene-canvas { min-height: 290px; height: 290px; }
+  .ks-float-tag { top: 13px; right: 18px; }
+  .ks-float-tag strong { font-size: 9px; }
+  .ks-float-tag span:not(.ks-tag-icon) { font-size: 7px; }
+  .ks-model-label { font-size: 6px; bottom: 8px; }
+  .ks-robot-stage .scene-bottom { bottom: 25px; }
+  .ks-stats { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; margin-top: 13px; }
+  .ks-stat { padding: 15px 13px; gap: 11px; }
+  .ks-stat-icon { width: 33px; height: 33px; }
+  .ks-stat strong { font-size: 22px; }
+  .ks-stat div>span { font-size: 9px; }
+  .ks-section-heading { align-items: flex-start; gap: 12px; margin-top: 27px; }
+  .ks-section-heading h2 { font-size: 20px; line-height: 1.35; }
+  .ks-section-heading>.ks-text-link { flex: none; font-size: 9px; margin-top: 17px; }
+  .ks-section-heading .ks-label { font-size: 7px; }
+  .ks-home-filters { gap: 3px; }
+  .ks-filter { font-size: 9px; padding: 7px 9px; min-height: 35px; }
+  .ks-course-grid,.ks-catalog-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+  .ks-course-body { padding: 13px 12px 0; }
+  .ks-course-body>.ks-label { font-size: 6px; letter-spacing: .6px; }
+  .ks-course-art,.ks-course-art .ks-art { height: 121px; }
+  .ks-course-number { left: 10px; top: 12px; font-size: 6px; letter-spacing: .7px; }
+  .ks-bookmark { width: 26px; height: 27px; right: 7px; top: 7px; }
+  .ks-course-format { left: 8px; bottom: 7px; font-size: 6px; padding: 3px 4px; }
+  .ks-course h3 { font-size: 13px; margin: 7px 0; min-height: 36px; }
+  .ks-course-body>p { font-size: 9px; line-height: 1.8; min-height: 45px; }
+  .ks-course-meta { font-size: 7px; gap: 7px; flex-wrap: wrap; }
+  .ks-course-meta .icon { width: 10px; height: 10px; }
+  .ks-course-progress { font-size: 7px; }
+  .ks-course-foot { margin-left: -12px; margin-right: -12px; padding: 11px 12px; flex-wrap: wrap; }
+  .ks-course-foot>a { font-size: 8px; }
+  .ks-duration { font-size: 7px; }
+  .ks-lab-tiles { grid-template-columns: 1fr; gap: 11px; }
+  .ks-lab-tile { padding: 20px; display: grid; grid-template-columns: 37px 1fr; gap: 0 15px; }
+  .ks-lab-icon { grid-column: 1; grid-row: 1/4; margin-bottom: 0; }
+  .ks-lab-tile h3 { grid-column: 2; font-size: 14px; }
+  .ks-lab-tile p { grid-column: 2; font-size: 11px; margin: 0 0 12px; }
+  .ks-lab-open { grid-column: 2; font-size: 10px; }
+  .ks-project-banner { display: grid; grid-template-columns: 40px 1fr; gap: 14px; padding: 20px; }
+  .ks-project-banner h2 { font-size: 17px; line-height: 1.5; }
+  .ks-project-banner p { font-size: 10px; line-height: 1.8; }
+  .ks-project-banner .ks-label { font-size: 6.5px; }
+  .ks-project-banner .btn { grid-column: 2; justify-self: start; margin: 0; font-size: 10px; }
+  .ks-project-mark { width: 37px; height: 37px; border-radius: 11px; }
+  .ks-right-column { display: flex; flex-direction: column; gap: 17px; }
+  .ks-right-column>section { width: 100%; }
+  .ks-next-card,.ks-challenge-card,.ks-timer-card,.ks-mindset-card { padding: 24px; }
+  .ks-next-card { min-height: 0; }
+  .ks-next-card h2 { font-size: 21px; }
+  .ks-next-card>p { font-size: 12px; }
+  .ks-next-meta { font-size: 10px; }
+  .ks-next-card>.btn { font-size: 12px; min-height: 43px; }
+  .ks-next-progress { font-size: 10px; }
+  .ks-challenge-card h2 { font-size: 23px; }
+  .ks-challenge-card>p,.ks-range-label,.ks-prediction { font-size: 12px; }
+  .ks-challenge-value { font-size: 11px; }
+  .ks-challenge-value output { font-size: 30px; }
+  .ks-range-extents { font-size: 10px; }
+  .ks-challenge-check { font-size: 11px; min-height: 43px; }
+  .ks-challenge-card>.ks-micro { font-size: 9px; }
+  .ks-card-heading .ks-label { font-size: 9px; }
+  .ks-timer-actions .btn { min-height: 41px; font-size: 11px; }
+  .ks-timer-presets button { font-size: 10px; padding: 6px 12px; }
+  .ks-timer-face>span { font-size: 10px; }
+  .ks-timer-card .ks-micro { font-size: 9px; }
+  .ks-mindset-card blockquote br { display: initial; }
+  .ks-mindset-card blockquote em { margin: 0; }
+  .ks-path-overview { grid-template-columns: 1fr; padding: 25px; gap: 20px; }
+  .ks-path-overview h2 { font-size: 29px; }
+  .ks-path-overview p { font-size: 12px; }
+  .ks-path-steps { display: grid; grid-template-columns: repeat(2,1fr); gap: 13px; }
+  .ks-path-steps i { display: none; }
+  .ks-path-progress { border-left: 0; border-top: 1px solid var(--ks-outline); padding: 20px 0 0; }
+  .ks-course-toolbar { margin-top: 23px; gap: 15px; }
+  .ks-catalog-tools { width: 100%; }
+  .ks-module-search { flex: 1; }
+  .ks-module-search input { width: 100%; padding: 11px 0; font-size: 12px; }
+  .ks-catalog-grid .ks-course-art,.ks-catalog-grid .ks-course-art .ks-art { height: 125px; }
+  .ks-catalog-grid .ks-course h3 { font-size: 13px; }
+  .ks-catalog-grid .ks-course-body>p { font-size: 9px; }
+  .ks-list-view .ks-course { grid-template-columns: 114px 1fr; }
+  .ks-list-view .ks-course-art { height: 100%; }
+  .ks-list-view .ks-course h3 { min-height: 0; }
+  .ks-list-view .ks-course-art .ks-art { width: 120px; }
+  .ks-module-hero { grid-template-columns: 1fr; padding: 26px; gap: 10px; }
+  .ks-module-hero h1 { font-size: 29px; }
+  .ks-module-art .ks-art { height: 160px; }
+  .ks-module-facts { font-size: 9px; gap: 10px; }
+  .ks-module-layout { grid-template-columns: 1fr; }
+  .ks-module-tabs { padding: 0 18px; gap: 21px; }
+  .ks-module-tabs button { font-size: 12px; min-height: 51px; }
+  #ks-module-panel { padding: 22px 17px; }
+  .ks-list-head { align-items: start; }
+  .ks-list-head h2 { font-size: 19px; line-height: 1.45; }
+  .ks-list-head>span { font-size: 9px; margin-top: 5px; }
+  .ks-path-lesson { padding: 17px 11px; gap: 11px; }
+  .ks-step-number { width: 29px; height: 31px; border-radius: 8px; font-size: 10px; }
+  .ks-path-lesson h3 { font-size: 14px; }
+  .ks-path-lesson p { font-size: 11px; }
+  .ks-lesson-foot { font-size: 8px; gap: 10px; flex-wrap: wrap; }
+  .ks-module-aside { grid-template-columns: 1fr; }
+  .ks-module-progress p,.ks-module-goal h3 { font-size: 12px; }
+  .ks-module-goal h3 { font-size: 19px; }
+  .ks-practice-prompts { grid-template-columns: 1fr; gap: 5px; }
+  .ks-practice-prompts h3 { font-size: 14px; }
+  .ks-practice-prompts p { font-size: 12px; }
+  .ks-practice-intro>p,.ks-evidence>p { font-size: 12px; }
+  .ks-evidence-actions { align-items: start; flex-direction: column; }
+  .ks-evidence-checks label { font-size: 12px; }
+  .ks-evidence>textarea { font-size: 13px; }
+  .ks-curriculum .ks-page-top { display: block; }
+  .ks-curriculum .ks-page-top>.btn { margin-top: 16px; font-size: 11px; }
+  .reader-heading h1 { font-size: 23px; }
+  .page-heading h1 { font-size: 26px; }
+}
+@media(max-width:360px) {
+  .ks-course-grid { grid-template-columns: 1fr; }
+  .ks-course-art,.ks-course-art .ks-art { height: 165px; }
+  .ks-course h3 { font-size: 16px; min-height: 0; }
+  .ks-course-body>p { min-height: 0; font-size: 12px; }
+  .ks-course-meta,.ks-course-foot>a { font-size: 10px; }
+}
+.reduce-motion .ks-float-tag,.reduce-motion .ks-flow,.reduce-motion .ks-light-ray,.reduce-motion .ks-course,.reduce-motion .slide-in { animation: none!important; }
+.reduce-motion .ks-course:hover,.reduce-motion .ks-course:hover .ks-art,.reduce-motion .ks-lab-tile:hover { transform: none; }
+@media(prefers-reduced-motion:reduce) { .ks-float-tag,.ks-course,.ks-flow,.ks-light-ray { animation: none!important; } .ks-course:hover,.ks-course:hover .ks-art,.ks-lab-tile:hover { transform: none; } }
+@media print { .ks-right-column,.ks-robot-stage,.ks-top-tools,.ks-bookmark,.ks-home-filters,.ks-view-switch,.ks-catalog-tools { display:none!important; } .ks-dashboard-grid,.ks-module-layout { display:block; } .ks-hero { display:block; } .ks-course-grid { grid-template-columns:repeat(2,1fr); } .ks-course { break-inside:avoid; } .ks-hero h2 { font-size:26pt; } }
+/* Readability pass: compact hierarchy without tiny instructional text. */
+.ks-course-body>.ks-label { font-size: 8px; color: var(--muted); }
+.ks-course h3 { font-size: calc(16px * var(--scale)); }
+.ks-course-body>p { font-size: calc(12px * var(--scale)); line-height: 1.8; min-height: 43px; }
+.ks-course-meta { font-size: calc(10px * var(--scale)); }
+.ks-course-progress { font-size: 10px; }
+.ks-course-foot>a { font-size: 11px; }
+.ks-duration { font-size: 9px; }
+.ks-filter { font-size: 11px; min-height: 38px; }
+.ks-hero-text>p { font-size: calc(13px * var(--scale)); }
+.ks-main-cta { font-size: 12px; min-height: 43px; }
+.ks-hero-text .ks-text-link { font-size: 11px; }
+.ks-hero-facts { font-size: 9px; }
+.ks-stat div>span { font-size: 10px; }
+.ks-next-card>p { font-size: calc(12px * var(--scale)); }
+.ks-next-meta { font-size: 10px; }
+.ks-next-card>.btn { font-size: 12px; min-height: 42px; }
+.ks-next-progress { font-size: 10px; }
+.ks-card-heading .ks-label { font-size: 9px; }
+.ks-tiny-badge { font-size: 8px; }
+.ks-challenge-card>p { font-size: 12px; color: #7f6c8e; }
+.ks-challenge-value { font-size: 11px; color: #7f6c8e; }
+.ks-range-label,.ks-prediction { font-size: 11px; color: #7f6c8e; }
+.ks-range-label strong { color: #795f8f; }
+.ks-range-extents { font-size: 10px; color: #826c95; }
+.ks-prediction input { width: 14px; height: 14px; }
+.ks-challenge-check { font-size: 11px; min-height: 40px; color: #77568f; }
+.ks-feedback { font-size: 12px; }
+.ks-challenge-card>.ks-micro { font-size: 9px; color: #86738f; }
+.ks-timer-face>span { font-size: 10px; }
+.ks-timer-presets button { font-size: 10px; min-height: 32px; }
+.ks-timer-actions .btn { font-size: 11px; min-height: 40px; }
+.ks-timer-card .ks-micro { font-size: 9px; }
+.ks-lab-tile h3 { font-size: 15px; }
+.ks-lab-tile p { font-size: 12px; color: #7a6c88; }
+.ks-lab-open { font-size: 11px; }
+.ks-lab-tile .ks-lab-open { color: #6b537f; }
+.ks-path-lesson h3 { font-size: calc(16px * var(--scale)); }
+.ks-path-lesson p { font-size: calc(12px * var(--scale)); }
+.ks-lesson-foot { font-size: 10px; }
+.ks-lesson-type { font-size: 9px; }
+.ks-lesson-type>span { font-size: 8px; }
+.ks-module-progress h3 { font-size: 15px; }
+.ks-module-progress p { font-size: 12px; }
+.ks-atlas-shortcut strong { font-size: 12px; }
+.ks-atlas-shortcut small { font-size: 10px; }
+.ks-practice-prompts h3 { font-size: 14px; }
+.ks-practice-prompts p { font-size: 12px; }
+.ks-evidence-checks label { font-size: 13px; }
+.ks-evidence>textarea { font-size: calc(13px * var(--scale)); }
+.ks-course-number,.ks-course-format { color: #74667f; }
+.ks-module-hero .ks-label,.ks-module-facts,.ks-module-hero>div>p { color: #776384; }
+.ks-mindset-card .ks-label { color: #5c7c67; }
+.ks-mindset-card blockquote { color: #476653; }
+.ks-mindset-card em { color: #63836f; }
+.ks-mindset-card a { color: #4e725b; }
+.ks-hero-badge { color: #6a4e9f; }
+@media(max-width:1190px) and (min-width:951px) {
+  .ks-course-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .ks-catalog-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .ks-hero h2 { font-size: 31px; }
+  .ks-stat div>span { font-size: 9px; }
+  .ks-course-meta { flex-wrap: wrap; }
+  .ks-stats { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .ks-lab-tiles { grid-template-columns: 1fr; }
+}
+@media(max-width:640px) {
+  .ks-filter { font-size: 10px; }
+  .ks-course-foot { gap: 8px; }
+  .ks-course-foot>a { font-size: 10px; }
+  .ks-course-body>p { font-size: calc(11px * var(--scale)); }
+  .ks-course h3,.ks-catalog-grid .ks-course h3 { font-size: calc(15px * var(--scale)); }
+  .ks-catalog-grid .ks-course-body>p { font-size: calc(11px * var(--scale)); }
+  .ks-course-body>.ks-label { font-size: 7px; }
+  .ks-course-meta { font-size: 9px; }
+  .ks-course-progress { font-size: 9px; }
+  .ks-path-lesson h3 { font-size: 15px; }
+  .ks-path-lesson p { font-size: 12px; }
+  .ks-path-lesson { padding: 17px 11px; }
+}
+@media(max-width:460px) {
+  .ks-course-grid,.ks-catalog-grid { grid-template-columns: 1fr; }
+  .ks-course-art,.ks-course-art .ks-art,.ks-catalog-grid .ks-course-art,.ks-catalog-grid .ks-course-art .ks-art { height: 174px; }
+  .ks-course-body { padding: 20px 20px 0; }
+  .ks-course h3,.ks-catalog-grid .ks-course h3 { min-height: 0; font-size: 18px; }
+  .ks-course-body>p,.ks-catalog-grid .ks-course-body>p { min-height: 0; font-size: 13px; }
+  .ks-course-body>.ks-label { font-size: 9px; }
+  .ks-course-meta,.ks-course-progress { font-size: 11px; }
+  .ks-course-foot { margin-left: -20px; margin-right: -20px; padding: 14px 20px; }
+  .ks-course-foot>a { font-size: 12px; }
+  .ks-duration { font-size: 10px; }
+  .ks-course-number { font-size: 9px; top: 15px; left: 16px; }
+  .ks-course-format { font-size: 8px; left: 14px; bottom: 11px; }
+  .ks-bookmark { width: 36px; height: 36px; padding: 8px; top: 10px; right: 10px; }
+  .ks-list-view .ks-course { grid-template-columns: 104px minmax(0,1fr); }
+  .ks-list-view .ks-course-art { height: 100%; }
+  .ks-list-view .ks-course-art .ks-art { width: 108px; height: 130px; }
+  .ks-list-view .ks-course-number { font-size: 7px; left: 8px; top: 8px; }
+  .ks-list-view .ks-bookmark { top: 30px; left: 8px; }
+  .ks-list-view .ks-course-format { display: none; }
+  .ks-list-view .ks-course-body { padding: 15px 13px 0; }
+  .ks-list-view .ks-course h3 { font-size: 15px; }
+  .ks-list-view .ks-course-body>p { font-size: 11px; }
+  .ks-list-view .ks-course-meta { font-size: 9px; }
+  .ks-list-view .ks-course-foot { margin-left: -13px; margin-right: -13px; padding: 10px 13px; }
+  .ks-list-view .ks-course-foot>a { font-size: 10px; }
+  .ks-list-view .ks-course-body>.ks-label { font-size: 7px; }
+}
+/* Dark-mode interactive text contrast. */
+[data-mode="dark"] { --accent: #b59bf5; --accent2: #c7b2fa; }
+[data-mode="dark"] .btn.primary { background: #7454d0; border-color: #7454d0; color: #fff; }
+[data-mode="dark"] .btn.primary:hover { background: #8162dc; }
+[data-mode="dark"] .ks-mini-circuit text { fill: #baa7cb; }
+[data-mode="dark"] .ks-challenge-value,[data-mode="dark"] .ks-range-extents,[data-mode="dark"] .ks-challenge-card>.ks-micro { color: #bca6cb; }
+[data-mode="dark"] .ks-course-format { background: #ffffffd6; }
+[data-mode="dark"] .ks-mindset-card em { color: #98b7a4; }
+@media(max-width:640px) {
+  .ks-hero h2 { font-size: 32px; line-height: 1.16; letter-spacing: -1.1px; margin: 15px 0; }
+  .ks-hero-text>p { font-size: 12px; line-height: 1.8; }
+  .ks-hero-text { padding-top: 23px; }
+  .ks-robot-stage .hero-lab,.ks-robot-stage .scene-canvas { min-height: 255px; height: 255px; }
+  .ks-float-tag { top: 8px; }
+}
 </style>
 </head><body>
 <a class="skip" href="#app">Skip to learning content</a>
@@ -237,6 +979,290 @@ class Lab{
 root.Labs={Lab,names,descriptors};
 })(window);
 </script>
+<script>/* Kinetic dashboard: original interactive UI, no network dependency.
+ * Progress is self-reported; focus minutes measure a timer, not mastery.
+ */
+(function (root) {
+  'use strict';
+
+  const TRACKS = [
+    { id: 'all', label: 'All modules', ids: null },
+    { id: 'foundations', label: 'Foundations', ids: ['01','02','03','04','05','06'] },
+    { id: 'autonomy', label: 'Robotics & autonomy', ids: ['07','08','09','10'] },
+    { id: 'industry', label: 'Industry & research', ids: ['11','12'] },
+    { id: 'saved', label: 'Saved', ids: null }
+  ];
+  const LESSON_TIME_NOTE = 'Reading estimate at 200 words per minute; practice takes longer.';
+  const clamp = (n, min, max) => Math.max(min, Math.min(max, Number(n) || 0));
+  const empty = () => ({ saved: [], filter: 'all', layout: 'grid', challenge: null, sessions: [], timer: { duration: 15, remaining: 900, deadline: 0 }, evidence: {} });
+  function sanitize(input) {
+    const d = empty(), o = input && typeof input === 'object' ? input : {};
+    d.saved = [...new Set((Array.isArray(o.saved) ? o.saved : []).filter(v => /^(0[1-9]|1[0-2])$/.test(v)))].slice(0,12);
+    d.filter = TRACKS.some(t => t.id === o.filter) ? o.filter : 'all';
+    d.layout = o.layout === 'list' ? 'list' : 'grid';
+    if (o.challenge && typeof o.challenge === 'object') {
+      d.challenge = { passed: o.challenge.passed === true, resistance: clamp(o.challenge.resistance,100,1000), prediction: o.challenge.prediction === 'less' ? 'less' : 'more' };
+    }
+    d.sessions = (Array.isArray(o.sessions) ? o.sessions : []).filter(s => s && Number.isFinite(s.finishedAt) && Number.isFinite(s.minutes) && s.minutes > 0 && s.minutes <= 45).slice(-365).map(s => ({ finishedAt: s.finishedAt, minutes: s.minutes }));
+    if (o.timer && typeof o.timer === 'object') {
+      const duration = [15,25,45].includes(o.timer.duration) ? o.timer.duration : 15;
+      d.timer = { duration, remaining: clamp(o.timer.remaining,0,duration*60), deadline: Number.isFinite(o.timer.deadline) && o.timer.deadline > 0 ? o.timer.deadline : 0 };
+    }
+    if (o.evidence && typeof o.evidence === 'object') Object.entries(o.evidence).slice(0,12).forEach(([k,v]) => {
+      if (/^(0[1-9]|1[0-2])$/.test(k) && v && typeof v === 'object') d.evidence[k] = { note: String(v.note || '').slice(0,10000), checks: [0,1,2].map(i => !!v.checks?.[i]) };
+    });
+    return d;
+  }
+  function circuitCurrent(r, voltage=3.3, forward=2) {
+    if (!Number.isFinite(r) || r <= 0) throw new RangeError('Resistance must be positive.');
+    return Math.max(0, voltage - forward) / r * 1000;
+  }
+  function readingMinutes(html) {
+    const words = String(html || '').replace(/<[^>]+>/g,' ').trim().split(/\s+/).filter(Boolean).length;
+    return Math.max(1, Math.ceil(words / 200));
+  }
+  function remainingSeconds(timer, now=Date.now()) {
+    return timer.deadline ? Math.max(0,Math.ceil((timer.deadline-now)/1000)) : Math.max(0,Math.round(timer.remaining));
+  }
+  const bookmarkSVG = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4V3Z"/></svg>';
+  const lightningSVG = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m13 2-9 12h7l-1 8 10-13h-7l1-7Z"/></svg>';
+
+  /* Schematic learning art. Intentionally not a hardware photograph. */
+  function art(id, large=false) {
+    const n = Number(id), stroke = '#6353b5', soft = '#b8a4f4';
+    const prefix = 'ks-art-'+id+(large?'-lg':'');
+    const start = `<svg viewBox="0 0 360 180" class="ks-art" aria-hidden="true"><defs><linearGradient id="${prefix}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eeeaff"/><stop offset="1" stop-color="#bdaaf2"/></linearGradient></defs><g fill="none" stroke="${stroke}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">`;
+    const grid = '<path d="M32 145H327M58 32V153M108 32V153M158 32V153M208 32V153M258 32V153M308 32V153M32 45H327M32 95H327" stroke="currentColor" opacity=".07"/>';
+    let body = '';
+    if ([1,2,4].includes(n)) {
+      body = '<path d="M62 95H116M200 95H280V140H62V95" stroke="#8e81ba" stroke-width="2.5"/><path class="ks-flow" d="M62 95H116M200 95H280V140H62V95" stroke="#7d63cf" stroke-dasharray="3 18" stroke-width="3"/><rect x="44" y="69" width="36" height="51" rx="9" fill="#f9f6ff"/><path d="M54 85H70M62 77V93M56 106H68"/><rect x="117" y="80" width="83" height="30" rx="13" fill="#f5d9aa" stroke="#b08f5e"/><path d="M134 81V109M146 81V109M181 81V109" stroke="#ac6b3d" stroke-width="5"/><path d="M270 74V102M291 74V101"/><path d="M269 74V58a11 11 0 0 1 23 0v16Z" fill="#a9dfbe" stroke="#64a680"/><path class="ks-light-ray" d="m267 43-7-7m35 7 7-7m-22 4V30" stroke="#77b58e"/><circle cx="62" cy="140" r="4" fill="#8670c4"/><text x="128" y="164" font-size="12" stroke="none" fill="#776a92" font-family="monospace">PREDICT. CONNECT. TEST.</text>';
+      if(n===4) body='<rect x="124" y="46" width="110" height="91" rx="15" fill="#e2eef9" stroke="#7591af"/><rect x="147" y="67" width="65" height="48" rx="8" fill="#334960"/><circle cx="179" cy="91" r="15" fill="#a3cbdd" stroke="#d1e7f2"/><path d="m125 66-34-13m34 39H78m46 24-33 18m143-67 35-13m-35 39h48m-48 24 35 18" stroke="#83a5bd"/>'+Array.from({length:6},(_,i)=>`<path d="M${138+i*16} 137v12" stroke="#c5a66b" stroke-width="5"/>`).join('');
+    } else if ([3,8].includes(n)) {
+      body = `<rect x="91" y="40" width="178" height="104" rx="17" fill="url(#${prefix})"/><rect x="116" y="60" width="127" height="63" rx="9" fill="#38304e"/><path d="m138 78-10 12 10 12m83-24 10 12-10 12m-34-28-12 31" stroke="#d2c3ff" stroke-width="3"/>`+Array.from({length:8},(_,i)=>`<path d="M${111+i*20} 30v10M${111+i*20} 144v12" stroke="#b6a584" stroke-width="5"/>`).join('')+'<circle class="ks-light-ray" cx="253" cy="53" r="4" fill="#d6f5b5" stroke="none"/>';
+    } else if ([5,7,11].includes(n)) {
+      body = '<ellipse cx="180" cy="153" rx="88" ry="10" fill="#645386" opacity=".08" stroke="none"/><path d="M105 140 140 71 217 47 247 82" stroke="#8974bc" stroke-width="25"/><path d="M105 140 140 71 217 47" stroke="#e5dbfb" stroke-width="13"/><circle cx="140" cy="71" r="17" fill="#f7f4ff" stroke-width="4"/><circle cx="217" cy="47" r="14" fill="#f7f4ff" stroke-width="4"/><circle cx="140" cy="71" r="5" fill="#a797d0"/><path d="m238 82-7 19 11 5m14-24 7 19-9 5" stroke-width="7"/><rect x="75" y="136" width="65" height="20" rx="8" fill="#c7b6eb"/><rect x="238" y="124" width="28" height="25" rx="5" fill="#edc28e" stroke="#b98a51"/>';
+    } else if ([6,9].includes(n)) {
+      body = '<path d="M60 32V146H310" stroke="#a397b8"/><path d="M61 73H310" stroke="#bd9663" stroke-dasharray="5 6"/><path d="M62 139C91 139 93 30 128 36S170 105 207 85S248 65 277 73S297 73 308 73" stroke="#8160ce" stroke-width="4"/><path d="M62 139C91 139 93 30 128 36S170 105 207 85S248 65 277 73S297 73 308 73" stroke="#cdbcf5" stroke-width="7" opacity=".2"/><circle class="ks-light-ray" cx="308" cy="73" r="6" fill="#8bc6ac" stroke="none"/><text x="76" y="167" font-size="11" fill="#877497" stroke="none" font-family="monospace">SETPOINT / RESPONSE</text>';
+    } else {
+      body = '<g transform="translate(92 30)"><rect width="178" height="126" rx="15" fill="#f7f4fd" stroke="#c2b2dd"/>'+Array.from({length:24},(_,i)=>`<rect x="${10+i%6*27}" y="${10+Math.floor(i/6)*27}" width="22" height="22" rx="5" fill="${[8,9,15].includes(i)?'#b4a5d1':'#e5ddf2'}" stroke="none"/>`).join('')+'<path class="ks-flow" d="M21 21H156V102" stroke="#7d5ac6" stroke-width="3" stroke-dasharray="7 4"/><circle cx="21" cy="21" r="9" fill="#98d1b4"/><circle cx="156" cy="102" r="9" fill="#efca8d"/></g>';
+    }
+    return start+grid+body+'</g></svg>';
+  }
+
+  function create(api) {
+    const { data:D, esc, icon, save, dialog, toast, reduced, robotMarkup } = api;
+    let refresh = () => {}, timerHandle, observer, eventsBound=false, mountedView='home';
+    let homeFilter='all', curriculumQuery='', challengeR=220, challengePrediction='', challengeChecked=false;
+    const moduleById = id => D.modules.find(m=>m.id===id);
+    const lesson = id => D.lessons.find(l=>l.id===id);
+    const state = () => api.state();
+    const dash = () => {
+      if (!state().dashboard || typeof state().dashboard !== 'object') state().dashboard=empty();
+      return state().dashboard;
+    };
+    state().dashboard = sanitize(state().dashboard);
+    const allIds = D.lessons.map(l=>l.id);
+    const done = ids => ids.filter(id=>state().complete[id]).length;
+    const pct = ids => Math.round(done(ids)/Math.max(ids.length,1)*100);
+    const labelTrack = id => Number(id)<=6 ? 'FOUNDATIONS' : Number(id)<=10 ? 'ROBOTICS & AUTONOMY' : 'INDUSTRY & RESEARCH';
+    function nextLesson() {
+      const last=lesson(state().lastLesson);
+      if(last&&!state().complete[last.id])return last;
+      return D.modules.flatMap(m=>m.lessons).map(lesson).find(l=>l&&!state().complete[l.id]) || D.lessons[0];
+    }
+    function ring(value,size=90,label='Reviewed') {
+      const r=36,c=2*Math.PI*r;
+      return `<div class="ks-ring" style="--ring-size:${size}px"><svg viewBox="0 0 90 90" aria-hidden="true"><circle cx="45" cy="45" r="${r}" class="ks-ring-track"/><circle cx="45" cy="45" r="${r}" class="ks-ring-value" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-value/100)}"/></svg><div><strong>${value}<small>%</small></strong><span>${label}</span></div></div>`;
+    }
+    function statsBar() {
+      const quizCorrect = D.lessons.reduce((sum,l)=>sum+l.quizzes.filter((q,i)=>state().quizzes[l.id+'-'+i]===q.correct).length,0);
+      return `<div class="ks-stats">${[
+        [icon('learn'),done(allIds),'/ '+allIds.length,'Lessons reviewed','Self-reported reading progress'],
+        [icon('check'),quizCorrect,'','Correct quiz answers','Your most recent saved answers'],
+        [bookmarkSVG,dash().saved.length,'','Saved modules','Your personal study queue'],
+        [icon('clock'),dash().sessions.reduce((n,s)=>n+s.minutes,0),'min','Completed focus time','Timer time, not a measure of attention']
+      ].map(([ic,n,unit,title,hint])=>`<div class="ks-stat" title="${hint}"><span class="ks-stat-icon">${ic}</span><div><strong>${n}<small>${unit}</small></strong><span>${title}</span></div></div>`).join('')}</div>`;
+    }
+    function courseCard(m,i=0) {
+      const current=done(m.lessons),value=pct(m.lessons),saved=dash().saved.includes(m.id);
+      return `<article class="ks-course module-card" data-course="${m.id}" style="--card-order:${i%6}">
+        <div class="ks-course-art ks-color-${m.color}"><a href="#/module/${m.id}" tabindex="-1" aria-hidden="true">${art(m.id)}</a><span class="ks-course-number">MODULE ${m.id}</span><button class="ks-bookmark ${saved?'is-saved':''}" data-ks="bookmark" data-id="${m.id}" aria-label="${saved?'Unsave':'Save'} ${esc(m.title)}" aria-pressed="${saved}">${bookmarkSVG}</button><span class="ks-course-format">${icon(m.sim==='circuit'?'chip':m.sim==='pid'?'lab':'grid')} Interactive module</span></div>
+        <div class="ks-course-body"><span class="ks-label">${labelTrack(m.id)}</span><h3><a href="#/module/${m.id}">${esc(m.title)}</a></h3><p>${esc(m.subtitle)}</p><div class="ks-course-meta"><span>${icon('learn')} ${m.lessons.length} lessons</span><span>${icon('lab')} Live lab</span></div><div class="ks-course-progress"><span>${current?`${current} of ${m.lessons.length} reviewed`:'Ready when you are'}</span><span>${value}%</span></div><div class="progress-bar" aria-label="${value}% reviewed"><i style="width:${value}%"></i></div><div class="ks-course-foot"><a href="#/module/${m.id}">${current?'Continue module':'Explore module'} ${icon('arrow')}</a><span class="ks-duration" title="${LESSON_TIME_NOTE}">${m.lessons.reduce((n,id)=>n+readingMinutes(lesson(id)?.body),0)} min read</span></div></div>
+      </article>`;
+    }
+    function home() {
+      const next=nextLesson(),m=moduleById(next.module)||D.modules[0],progress=pct(allIds);
+      return `<section class="ks-dashboard" aria-label="Learning dashboard">
+        <div class="ks-page-top"><div><p class="ks-eyebrow">YOUR ROBOTICS WORKSPACE</p><h1>Good to see you, ${esc(state().name||'maker')}. <span class="ks-sparkle">${icon('spark')}</span></h1><p>One idea. One experiment. One step closer to building something real.</p></div><div class="ks-top-tools"><span class="ks-local">${icon('check')} Your personal workspace</span><a class="btn quiet small" href="#/settings">Personalize ${icon('settings')}</a></div></div>
+        <div class="ks-dashboard-grid">
+          <div class="ks-main-column">
+            <section class="ks-hero"><div class="ks-hero-text"><span class="ks-hero-badge"><i></i> YOUR NEXT CHAPTER STARTS HERE</span><h2>Big ideas.<br>Small experiments.<br><em>Real robots.</em></h2><p>Go from "how does this work?" to "I built it." Your hands-on robotics journey starts with one small win.</p><div class="actions"><a class="btn primary ks-main-cta" href="#/lesson/${next.id}">${done(allIds)?'Continue learning':'Start learning'} ${icon('arrow')}</a><a class="ks-text-link" href="#/learn">See the learning path</a></div><div class="ks-hero-facts"><span><strong>${D.modules.length}</strong> connected modules</span><span><strong>${D.projects.length}</strong> build journeys</span><span><strong>6</strong> live labs</span></div></div><div class="ks-robot-stage">${robotMarkup()}<div class="ks-float-tag ks-float-one"><span class="ks-tag-icon">${icon('chip')}</span><div><strong>Meet your desk buddy</strong><span>Explore the idea from the inside</span></div></div><div class="ks-model-label">ORIGINAL CONCEPT MODEL &middot; NOT MANUFACTURING CAD</div></div></section>
+            ${statsBar()}
+            <div class="ks-section-heading"><div><span class="ks-label">YOUR LEARNING PATH</span><h2>A little progress, every day.</h2></div><a class="ks-text-link" href="#/learn">All ${D.modules.length} modules ${icon('arrow')}</a></div>
+            <div class="ks-home-filters" role="group" aria-label="Featured module filters">${[['all','Recommended'],['foundations','Foundations'],['autonomy','Autonomy & AI'],['saved','Saved']].map(([id,label])=>`<button class="ks-filter ${homeFilter===id?'active':''}" data-ks="home-filter" data-value="${id}" aria-pressed="${homeFilter===id}">${id==='saved'?bookmarkSVG:''}${label}${id==='saved'?` <span data-saved-count>${dash().saved.length}</span>`:''}</button>`).join('')}</div>
+            <div class="ks-course-grid" id="ks-featured-courses">${featuredCards()}</div>
+            <div class="ks-section-heading"><div><span class="ks-label">LESS PASSIVE WATCHING. MORE DOING.</span><h2>Your next experiment awaits.</h2></div><a class="ks-text-link" href="#/sandbox">Open the playground ${icon('arrow')}</a></div>
+            <div class="ks-lab-tiles">${[
+              ['circuit','chip','Make electricity visible','See how one resistor changes the current.','mint'],
+              ['pid','lab','Find the perfect balance','Tune feedback. Watch overshoot settle.','lilac'],
+              ['arm','build','Put motion in your hands','Explore reach, angles and impossible targets.','peach']
+            ].map(([id,ic,title,desc,color])=>`<a href="#/sandbox/${id}" class="ks-lab-tile ks-color-${color}"><span class="ks-lab-icon">${icon(ic)}</span><h3>${title}</h3><p>${desc}</p><span class="ks-lab-open">Try the experiment ${icon('arrow')}</span></a>`).join('')}</div>
+            <section class="ks-project-banner"><div class="ks-project-mark">${icon('build')}</div><div><span class="ks-label">MAKE THE LEAP FROM IDEA TO BUILD</span><h2>Your first circuit. Your next robot.</h2><p>Outcome. Parts. Connections. Code. Validation. Follow all five stages.</p></div><a class="btn" href="#/build">Explore projects ${icon('arrow')}</a></section>
+          </div>
+          <aside class="ks-right-column" aria-label="Personal learning tools">
+            <section class="ks-next-card"><div class="ks-card-heading"><span class="ks-label">PICK UP HERE</span><span class="ks-tiny-badge">MODULE ${m.id}</span></div><span class="ks-next-symbol">${icon('learn')}</span><h2>${esc(next.title)}</h2><p>${esc(next.intro)}</p><div class="ks-next-meta">${icon('clock')} ${readingMinutes(next.body)} min read <span>&middot;</span> ${esc(m.title)}</div><a class="btn primary" href="#/lesson/${next.id}">${done(allIds)?'Continue lesson':'Begin first lesson'} ${icon('arrow')}</a><div class="ks-next-progress"><span>Module progress</span><strong>${done(m.lessons)} / ${m.lessons.length}</strong></div><div class="progress-bar"><i style="width:${pct(m.lessons)}%"></i></div></section>
+            ${challengeCard()}
+            ${timerCard()}
+            <section class="ks-mindset-card"><span class="ks-label">THE ENGINEER'S MINDSET</span><blockquote>Don't just ask,<br>"Does it work?"<br><em>Ask, "How do I know?"</em></blockquote><a class="ks-text-link" href="#/lesson/engineering-method">Build that habit ${icon('arrow')}</a></section>
+          </aside>
+        </div>
+      </section>`;
+    }
+    function featuredCards() {
+      let ms;
+      if(homeFilter==='saved')ms=D.modules.filter(m=>dash().saved.includes(m.id));
+      else if(homeFilter==='autonomy')ms=D.modules.filter(m=>['07','08','09','10'].includes(m.id));
+      else if(homeFilter==='foundations')ms=D.modules.slice(0,6);
+      else { const nextModule=nextLesson().module;ms=[...D.modules].sort((a,b)=>(a.id===nextModule?-1:b.id===nextModule?1:0)||(pct(a.lessons)===100?1:0)-(pct(b.lessons)===100?1:0)||Number(a.id)-Number(b.id)).slice(0,6); }
+      return ms.length?ms.map(courseCard).join(''):emptyState('Your study queue starts here.','Save a module using its bookmark. It will appear here whenever you return.');
+    }
+    function emptyState(title,text) {return `<div class="ks-empty">${bookmarkSVG}<h3>${title}</h3><p>${text}</p></div>`;}
+    function challengeCard() {
+      return `<section class="ks-challenge-card"><div class="ks-card-heading"><span class="ks-label">A 2-MINUTE DISCOVERY</span>${lightningSVG}</div><h2>A brighter idea.</h2><p>Can you keep this LED below <strong>10 mA</strong>?</p><div class="ks-mini-circuit" aria-label="Illustrative 3.3 volt LED circuit"><svg viewBox="0 0 280 102" role="img" aria-label="A battery, resistor and LED in a series loop"><path d="M32 50H85M152 50H244V85H32V50" fill="none" stroke="#81769c" stroke-width="2"/><rect x="20" y="31" width="24" height="38" rx="6" fill="#7a65ac"/><path d="M27 41H37m-5-5v10m-4 13h8" stroke="#fff" stroke-width="1.5"/><rect x="85" y="39" width="67" height="22" rx="8" fill="#efd6a8" stroke="#b18c57"/><path d="M99 40V60m12-20v20m28-20v20" stroke="#a57048" stroke-width="4"/><circle class="ks-led-halo" cx="244" cy="36" r="25" fill="#89bc69" opacity=".15"/><path id="ks-led-bulb" d="M234 48V35a10 10 0 0 1 20 0v13Z" fill="#9bc981" stroke="#699358"/><path d="M236 48v12m16-12v12" stroke="#6f657d"/><text x="12" y="19" fill="#756783" font-size="10" font-family="monospace">3.3 V</text><text x="219" y="19" fill="#756783" font-size="10" font-family="monospace">Vf 2.0 V</text></svg></div><div class="ks-challenge-value"><span>Estimated current</span><output id="ks-current">${circuitCurrent(challengeR).toFixed(2)} <small>mA</small></output></div><label class="ks-range-label" for="ks-resistance">Resistance <strong id="ks-resistance-value">${challengeR} &Omega;</strong></label><input type="range" id="ks-resistance" min="100" max="1000" step="10" value="${challengeR}" aria-describedby="ks-circuit-note"><div class="ks-range-extents"><span>100 &Omega;</span><span>1,000 &Omega;</span></div><fieldset class="ks-prediction"><legend>More resistance means...</legend><label><input type="radio" name="ks-predict" value="less" ${challengePrediction==='less'?'checked':''}> Less current</label><label><input type="radio" name="ks-predict" value="more" ${challengePrediction==='more'?'checked':''}> More current</label></fieldset><button class="btn ks-challenge-check" data-ks="check-challenge">Check my reasoning ${icon('arrow')}</button><div id="ks-challenge-feedback" class="ks-feedback" role="status" hidden></div><p id="ks-circuit-note" class="ks-micro">Teaching calculation, not a wiring safety guarantee. Check your actual LED and board limits.</p></section>`;
+    }
+    function timerCard() {
+      const t=dash().timer;
+      return `<section class="ks-timer-card"><div class="ks-card-heading"><span class="ks-label">MAKE ROOM FOR CURIOSITY</span>${icon('clock')}</div><div class="ks-timer-face"><strong id="ks-timer-display">${formatTime(remainingSeconds(t))}</strong><span id="ks-timer-caption">${t.deadline?'Focus session in progress':'A little focused time goes a long way.'}</span></div><div class="ks-timer-presets" role="group" aria-label="Focus session duration">${[15,25,45].map(n=>`<button data-ks="timer-duration" data-value="${n}" aria-pressed="${t.duration===n}" class="${t.duration===n?'active':''}">${n} min</button>`).join('')}</div><div class="ks-timer-actions"><button class="btn" data-ks="timer-toggle">${icon(t.deadline?'pause':'play')}<span>${t.deadline?'Pause session':'Start focus session'}</span></button><button class="icon-btn" data-ks="timer-reset" aria-label="Reset focus timer">${icon('reset')}</button></div><p class="ks-micro">A personal timer. Time elapsed is not proof of learning.</p></section>`;
+    }
+    const formatTime = n => `${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`;
+    function learn() {
+      const ids=allIds;
+      return `<section class="ks-curriculum"><div class="ks-page-top"><div><p class="ks-eyebrow">THE COMPLETE LEARNING PATH</p><h1>Understand the whole robot.</h1><p>From your first circuit to systems you can design, test and explain.</p></div><button class="btn" data-action="scope">${icon('grid')} Curriculum map</button></div><section class="ks-path-overview"><div><span class="ks-label">A CONNECTED CURRICULUM</span><h2>Follow your curiosity.<br><em>Keep the fundamentals.</em></h2><p>Learn the idea, run an experiment, build something, and explain the evidence. Every module connects to the next.</p><div class="ks-path-steps"><span><b>01</b> Understand</span><i></i><span><b>02</b> Experiment</span><i></i><span><b>03</b> Build</span><i></i><span><b>04</b> Explain</span></div></div><div class="ks-path-progress">${ring(pct(ids),138)}<p><strong>${done(ids)} of ${ids.length}</strong> lessons reviewed<br><span>Reading progress, not certification.</span></p><a href="#/lesson/${nextLesson().id}" class="btn primary">${done(ids)?'Continue learning':'Start at the beginning'} ${icon('arrow')}</a></div></section>
+        <div class="ks-course-toolbar"><div class="ks-home-filters" role="group" aria-label="Learning track">${TRACKS.map(t=>`<button class="ks-filter ${dash().filter===t.id?'active':''}" data-ks="filter" data-value="${t.id}" aria-pressed="${dash().filter===t.id}">${t.id==='saved'?bookmarkSVG:''}${t.label}</button>`).join('')}</div><div class="ks-catalog-tools"><label class="ks-module-search">${icon('search')}<input id="ks-module-query" type="search" value="${esc(curriculumQuery)}" placeholder="Find a module..." aria-label="Search curriculum modules"></label><div class="ks-view-switch" role="group" aria-label="Course layout"><button class="${dash().layout==='grid'?'active':''}" data-ks="layout" data-value="grid" aria-label="Grid layout" aria-pressed="${dash().layout==='grid'}">${icon('grid')}</button><button class="${dash().layout==='list'?'active':''}" data-ks="layout" data-value="list" aria-label="List layout" aria-pressed="${dash().layout==='list'}"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5h13M8 12h13M8 19h13M3 5h.1M3 12h.1M3 19h.1"/></svg></button></div></div></div><p class="ks-results-count" id="ks-result-count" role="status"></p><div class="ks-course-grid ks-catalog-grid ${dash().layout==='list'?'ks-list-view':''}" id="ks-catalog"></div><div class="quality-note"><strong>Build evidence, not just a completion badge.</strong> This is a guided learning platform, not an accredited degree. Hardware practice, independent experiments and design reviews remain essential.</div></section>`;
+    }
+    function moduleView(id,tab='lessons') {
+      const m=moduleById(id)||D.modules[0],ids=m.lessons.filter(lesson),next=ids.find(id=>!state().complete[id])||ids[0];
+      const active=['lessons','practice','evidence'].includes(tab)?tab:'lessons';
+      const saved=dash().saved.includes(m.id), p=D.projects.filter(p=>p.module===m.id);
+      let body='';
+      if(active==='lessons')body=`<div class="ks-lesson-path"><div class="ks-list-head"><h2>Small steps. Lasting understanding.</h2><span>${ids.length} lessons</span></div>${ids.map((id,i)=>{const l=lesson(id),complete=state().complete[id];return `<a class="ks-path-lesson ${complete?'is-complete':''} ${id===next?'is-next':''}" href="#/lesson/${id}"><span class="ks-step-number">${complete?icon('check'):String(i+1).padStart(2,'0')}</span><div><div class="ks-lesson-type">${l.kind==='project'?'GUIDED BUILD':'LESSON'} ${id===next&&!complete?'<span>UP NEXT</span>':''}</div><h3>${esc(l.title)}</h3><p>${esc(l.intro)}</p><div class="ks-lesson-foot"><span title="${LESSON_TIME_NOTE}">${icon('clock')} ${readingMinutes(l.body)} min read</span><span>${l.quizzes.length?'Knowledge check included':'Reflection & practice'}</span></div></div><span class="ks-row-arrow">${icon(complete?'check':'arrow')}</span></a>`;}).join('')}</div>`;
+      if(active==='practice')body=`<div class="ks-practice-intro"><span class="ks-label">FROM A CONCEPT TO A RESULT</span><h2>Predict first. Then press play.</h2><p>Change one input. Observe the result. Explain why your prediction held up, or what you missed.</p><div class="ks-practice-art">${art(m.id,true)}<a href="#/sandbox/${m.sim}" class="btn primary">Open the ${m.sim==='rl'?'Q-learning':m.sim} lab ${icon('arrow')}</a></div><div class="ks-practice-prompts">${[['01','Make a prediction','Write what you expect, with units, before changing anything.'],['02','Change one variable','Keep the other inputs unchanged so you can explain the effect.'],['03','Keep the evidence','Record the inputs, result, and one limitation of this model.']].map(([n,t,d])=>`<div><b>${n}</b><h3>${t}</h3><p>${d}</p></div>`).join('')}</div>${p.length?`<h3>Build on the idea</h3>${p.map(p=>`<a class="ks-related-project" href="#/project/${p.id}/0">${icon('build')}<span><strong>${esc(p.title)}</strong><small>5 guided stages &middot; ${esc(p.level)}</small></span>${icon('arrow')}</a>`).join('')}`:''}<p class="ks-micro">Browser labs are simplified teaching models. Native simulators and physical hardware require their own setup and validation.</p></div>`;
+      if(active==='evidence') {
+        const ev=dash().evidence[m.id]||{note:'',checks:[]};
+        body=`<div class="ks-evidence"><span class="ks-label">YOUR MODULE EXIT TASK</span><h2>Show what you understand.</h2><p class="ks-evidence-gate">${esc(m.gate)}</p><fieldset class="ks-evidence-checks"><legend>Self-review checklist</legend>${['I can explain the idea in plain language.','I reproduced one result and recorded its inputs and units.','I can describe one failure mode or limitation.'].map((t,i)=>`<label><input type="checkbox" data-ks-evidence="${m.id}" data-index="${i}" ${ev.checks[i]?'checked':''}>${t}</label>`).join('')}</fieldset><label for="ks-evidence-note" class="ks-label">YOUR RESULT, EXPLANATION & LIMITATIONS</label><textarea id="ks-evidence-note" data-ks-note="${m.id}" rows="10" placeholder="What I predicted...\nWhat I observed...\nThe evidence...\nWhat could invalidate my conclusion...">${esc(ev.note)}</textarea><div class="ks-evidence-actions"><span class="ks-micro" id="ks-evidence-status" role="status">Saved locally as you type. This is not automatically graded.</span><button class="btn" data-ks="export-evidence" data-id="${m.id}">${icon('download')} Export evidence</button></div></div>`;
+      }
+      return `<section class="ks-module-view"><a class="ks-back-link" href="#/learn">${icon('back')} All modules</a><section class="ks-module-hero ks-color-${m.color}"><div><span class="ks-label">MODULE ${m.id} &middot; ${labelTrack(m.id)}</span><h1>${esc(m.title)}</h1><p>${esc(m.subtitle)}</p><div class="ks-module-facts"><span>${icon('learn')} ${ids.length} lessons</span><span>${icon('lab')} Interactive lab</span><span>${icon('flag')} Evidence-based exit task</span></div><div class="actions"><a class="btn primary" href="#/lesson/${next}">${done(ids)?'Continue module':'Start module'} ${icon('arrow')}</a><button class="btn ks-save-module ${saved?'is-saved':''}" data-ks="bookmark" data-id="${m.id}" aria-pressed="${saved}">${bookmarkSVG} ${saved?'Saved to your queue':'Save for later'}</button></div></div><div class="ks-module-art">${art(m.id,true)}<span>CONCEPT ILLUSTRATION</span></div></section><div class="ks-module-layout"><div class="ks-module-content"><div class="ks-module-tabs" role="tablist" aria-label="Module sections">${[['lessons','Lessons',ids.length],['practice','Experiment',null],['evidence','My evidence',null]].map(([id,title,count])=>`<button id="ks-tab-${id}" role="tab" aria-selected="${active===id}" tabindex="${active===id?0:-1}" aria-controls="ks-module-panel" data-ks="module-tab" data-module="${m.id}" data-value="${id}">${title}${count?` <span>${count}</span>`:''}</button>`).join('')}</div><section id="ks-module-panel" role="tabpanel" aria-labelledby="ks-tab-${active}" tabindex="0">${body}</section></div><aside class="ks-module-aside"><section class="ks-module-progress"><div class="ks-card-heading"><span class="ks-label">YOUR PROGRESS</span>${icon('flag')}</div>${ring(pct(ids),130)}<h3>${done(ids)} of ${ids.length} lessons reviewed</h3><p>Mark lessons reviewed as you work. A finished experiment matters more than a full progress bar.</p><div class="progress-bar"><i style="width:${pct(ids)}%"></i></div></section><section class="ks-module-goal"><span class="ks-label">BY THE END, AIM TO...</span><h3>${esc(m.gate)}</h3><a class="ks-text-link" href="#/module/${m.id}/evidence">Keep your evidence ${icon('arrow')}</a></section><a href="#/atlas" class="ks-atlas-shortcut">${icon('photo')}<span><strong>See the real hardware</strong><small>Source photographs & annotations</small></span>${icon('arrow')}</a></aside></div></section>`;
+    }
+    function updateCatalog() {
+      const el=document.querySelector('#ks-catalog');if(!el)return;
+      const track=TRACKS.find(t=>t.id===dash().filter)||TRACKS[0];
+      const q=curriculumQuery.toLowerCase().trim();
+      const ms=D.modules.filter(m=>(!track.ids||track.ids.includes(m.id))&&(track.id!=='saved'||dash().saved.includes(m.id))&&(!q||`${m.title} ${m.subtitle} ${m.gate}`.toLowerCase().includes(q)));
+      el.classList.toggle('ks-list-view',dash().layout==='list');
+      el.innerHTML=ms.length?ms.map(courseCard).join(''):emptyState('Nothing here just yet.',q?'Try a different keyword or another learning track.':'Bookmark a module to build your personal learning queue.');
+      document.querySelector('#ks-result-count').textContent=`${ms.length} ${ms.length===1?'module':'modules'} ${q?'matching your search':'to explore'}`;
+    }
+    function updateChallenge() {
+      const current=circuitCurrent(challengeR),el=document.querySelector('#ks-current');if(!el)return;
+      el.innerHTML=`${current.toFixed(2)} <small>mA</small>`;
+      el.classList.toggle('over-limit',current>10);
+      document.querySelector('#ks-resistance-value').innerHTML=`${challengeR} &Omega;`;
+      const bulb=document.querySelector('#ks-led-bulb');bulb.style.fill=current>10?'#e9a07d':'#9bc981';
+      document.querySelector('.ks-led-halo').style.opacity=String(clamp(current/55,.04,.3));
+      if(challengeChecked)document.querySelector('#ks-challenge-feedback').hidden=true;
+    }
+    function checkChallenge() {
+      const el=document.querySelector('#ks-challenge-feedback');if(!el)return;
+      el.hidden=false;challengeChecked=true;
+      if(!challengePrediction){el.className='ks-feedback';el.textContent='Make your prediction first: what happens when resistance increases?';return;}
+      const ma=circuitCurrent(challengeR),passed=ma<=10&&challengePrediction==='less';
+      el.className='ks-feedback '+(passed?'is-correct':'is-retry');
+      el.textContent=passed?`Exactly. (3.3 - 2.0) / ${challengeR} = ${ma.toFixed(2)} mA. More resistance means less current. Your estimate is under the 10 mA target.`:challengePrediction!=='less'?'Try again: current = voltage difference / resistance. Increasing the denominator reduces the current.':`${ma.toFixed(2)} mA is above the target. Increase resistance and check again.`;
+      dash().challenge={passed,resistance:challengeR,prediction:challengePrediction};save();
+      if(passed&&!reduced()){el.animate([{transform:'translateY(5px)',opacity:0},{transform:'translateY(0)',opacity:1}],{duration:280,easing:'ease-out'});}
+    }
+    function tickTimer() {
+      const t=dash().timer,n=remainingSeconds(t);
+      if(t.deadline&&n===0){dash().sessions.push({finishedAt:Date.now(),minutes:t.duration});dash().sessions=dash().sessions.slice(-365);t.deadline=0;t.remaining=0;save();const stats=document.querySelector('.ks-stats');if(stats)stats.outerHTML=statsBar();toast('Focus session complete. Write down one thing you learned.');}
+      const display=document.querySelector('#ks-timer-display');if(display)display.textContent=formatTime(n);
+      const caption=document.querySelector('#ks-timer-caption');if(caption)caption.textContent=n===0?'Session complete. Save one useful observation.':t.deadline?'Focus session in progress':'A little focused time goes a long way.';
+      const btn=document.querySelector('[data-ks="timer-toggle"]');if(btn){btn.innerHTML=`${icon(t.deadline?'pause':'play')}<span>${t.deadline?'Pause session':n===0?'Start another session':'Start focus session'}</span>`;}
+      document.querySelectorAll('[data-ks="timer-duration"]').forEach(b=>{b.classList.toggle('active',Number(b.dataset.value)===t.duration);b.setAttribute('aria-pressed',String(Number(b.dataset.value)===t.duration));});
+    }
+    function updateBookmark(id) {
+      if(!moduleById(id))return;
+      const list=dash().saved,saved=!list.includes(id);dash().saved=saved?[...list,id]:list.filter(x=>x!==id);save();
+      document.querySelectorAll(`[data-ks="bookmark"][data-id="${id}"]`).forEach(b=>{
+        b.classList.toggle('is-saved',saved);b.setAttribute('aria-pressed',String(saved));
+        if(b.classList.contains('ks-bookmark'))b.setAttribute('aria-label',`${saved?'Unsave':'Save'} ${moduleById(id).title}`);
+        else b.innerHTML=bookmarkSVG+(saved?' Saved to your queue':' Save for later');
+      });
+      document.querySelectorAll('[data-saved-count]').forEach(el=>el.textContent=dash().saved.length);
+      const stats=document.querySelector('.ks-stats');if(stats)stats.outerHTML=statsBar();
+      if(mountedView==='learn'&&dash().filter==='saved')updateCatalog();
+      if(mountedView==='home'&&homeFilter==='saved'){const c=document.querySelector('#ks-featured-courses');if(c)c.innerHTML=featuredCards();}
+      toast(saved?'Module saved to your learning queue.':'Module removed from your learning queue.');
+    }
+    function evidence(id) {
+      if(!dash().evidence[id])dash().evidence[id]={note:'',checks:[false,false,false]};
+      return dash().evidence[id];
+    }
+    function bind() {
+      if(eventsBound)return;eventsBound=true;
+      document.addEventListener('click',e=>{
+        const b=e.target.closest('[data-ks]');if(!b)return;
+        const a=b.dataset.ks,v=b.dataset.value;
+        if(a==='bookmark')updateBookmark(b.dataset.id);
+        if(a==='home-filter'){homeFilter=v;document.querySelectorAll('[data-ks="home-filter"]').forEach(el=>{el.classList.toggle('active',el===b);el.setAttribute('aria-pressed',String(el===b));});document.querySelector('#ks-featured-courses').innerHTML=featuredCards();}
+        if(a==='filter'){dash().filter=v;save();document.querySelectorAll('[data-ks="filter"]').forEach(el=>{el.classList.toggle('active',el===b);el.setAttribute('aria-pressed',String(el===b));});updateCatalog();}
+        if(a==='layout'){dash().layout=v;save();document.querySelectorAll('[data-ks="layout"]').forEach(el=>{el.classList.toggle('active',el===b);el.setAttribute('aria-pressed',String(el===b));});updateCatalog();}
+        if(a==='check-challenge')checkChallenge();
+        if(a==='timer-toggle'){const t=dash().timer;if(t.deadline){t.remaining=remainingSeconds(t);t.deadline=0;}else{if(t.remaining<=0)t.remaining=t.duration*60;t.deadline=Date.now()+t.remaining*1000;}save();tickTimer();}
+        if(a==='timer-reset'){const t=dash().timer;t.deadline=0;t.remaining=t.duration*60;save();tickTimer();}
+        if(a==='timer-duration'){const t=dash().timer;t.duration=Number(v);t.remaining=Number(v)*60;t.deadline=0;save();tickTimer();}
+        if(a==='module-tab'){const mod=b.dataset.module,scroll=window.scrollY;location.hash='/module/'+mod+'/'+v;requestAnimationFrame(()=>requestAnimationFrame(()=>{window.scrollTo({top:scroll,behavior:'instant'});document.querySelector('#ks-tab-'+v)?.focus({preventScroll:true});}));}
+        if(a==='export-evidence'){
+          const id=b.dataset.id,m=moduleById(id),ev=evidence(id);
+          const text=`# Module ${id}: ${m.title}\n\n## Exit task\n${m.gate}\n\n## Self-review\n${['Explain','Reproduce','Identify a limitation'].map((t,i)=>`- [${ev.checks[i]?'x':' '}] ${t}`).join('\n')}\n\n## Evidence\n${ev.note}\n\nSelf-reported learning record; not an automatically verified assessment.\n`;
+          const url=URL.createObjectURL(new Blob([text],{type:'text/markdown'})),link=document.createElement('a');link.href=url;link.download=`kinetic-module-${id}-evidence.md`;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+        }
+      });
+      document.addEventListener('input',e=>{
+        if(e.target.id==='ks-resistance'){challengeR=Number(e.target.value);updateChallenge();}
+        if(e.target.id==='ks-module-query'){curriculumQuery=e.target.value;updateCatalog();}
+        if(e.target.dataset.ksNote){evidence(e.target.dataset.ksNote).note=e.target.value.slice(0,10000);save();const status=document.querySelector('#ks-evidence-status');if(status)status.textContent='Saved on this device. Export to keep a separate copy.';}
+      });
+      document.addEventListener('change',e=>{
+        if(e.target.name==='ks-predict'){challengePrediction=e.target.value;if(challengeChecked)document.querySelector('#ks-challenge-feedback').hidden=true;}
+        if(e.target.dataset.ksEvidence){evidence(e.target.dataset.ksEvidence).checks[Number(e.target.dataset.index)]=e.target.checked;save();}
+      });
+      document.addEventListener('keydown',e=>{
+        const tabs=e.target.closest('.ks-module-tabs');if(!tabs||!e.target.matches('[role="tab"]'))return;
+        const list=[...tabs.querySelectorAll('[role="tab"]')],index=list.indexOf(e.target);
+        let i;if(e.key==='ArrowRight')i=(index+1)%list.length;else if(e.key==='ArrowLeft')i=(index-1+list.length)%list.length;else if(e.key==='Home')i=0;else if(e.key==='End')i=list.length-1;else return;
+        e.preventDefault();list.forEach((b,j)=>b.tabIndex=j===i?0:-1);list[i].focus();
+      });
+      document.addEventListener('visibilitychange',()=>{
+        // Pause automatically rather than count unattended background time.
+        if(document.hidden&&dash().timer.deadline){const t=dash().timer;t.remaining=remainingSeconds(t);t.deadline=0;save();}
+        else tickTimer();
+      });
+    }
+    function mount(view,rerender) {
+      mountedView=view;refresh=rerender;bind();updateCatalog();updateChallenge();
+      tickTimer();timerHandle=setInterval(tickTimer,500);
+      document.querySelectorAll('.ks-course,.ks-lab-tile').forEach(el=>{
+        el.addEventListener('pointermove',e=>{if(reduced()||e.pointerType==='touch')return;const r=el.getBoundingClientRect();el.style.setProperty('--pointer-x',`${e.clientX-r.left}px`);el.style.setProperty('--pointer-y',`${e.clientY-r.top}px`);});
+      });
+      return()=>{clearInterval(timerHandle);observer?.disconnect();};
+    }
+    return { home, learn, moduleView, mount, sanitize, art, state:dash };
+  }
+  const exports={create,sanitize,circuitCurrent,readingMinutes,remainingSeconds};
+  if(typeof module!=='undefined'&&module.exports)module.exports=exports;
+  root.KineticDashboard=exports;
+})(typeof window!=='undefined'?window:globalThis);
+</script>
 <script>/* KINETIC Robotics Studio. Framework-free, local-first learning workspace. */
 (function(){'use strict';
 const D=window.KINETIC_CONTENT;
@@ -259,21 +1285,21 @@ function appearance(){document.documentElement.dataset.theme=S.theme;document.do
 function toast(t){let el=$('#toast');if(!el){el=document.createElement('div');el.id='toast';el.className='toast';el.setAttribute('role','status');document.body.append(el);}el.textContent=t;el.hidden=false;clearTimeout(el.timer);el.timer=setTimeout(()=>el.hidden=true,5000);}
 function download(name,content,type='application/json'){const u=URL.createObjectURL(new Blob([content],{type}));const a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);}
 function dispose(){cleanup.forEach(f=>{try{f();}catch{}});cleanup=[];currentScene?.destroy();currentScene=null;currentLab?.destroy();currentLab=null;stopCode(false);clearInterval(autoSlide);autoSlide=null;window.speechSynthesis?.cancel();}
-function header(){const nav=[['learn','Learn'],['build','Build'],['sandbox','Simulate'],['code','Code'],['atlas','Explore'],['library','Library']];$('#header').innerHTML=`<a class="brand" href="#/home" aria-label="Kinetic home"><span class="brand-icon">${icon('chip')}</span><span>kinetic<em>Robotics studio</em></span></a><nav class="nav" aria-label="Main navigation">${nav.map(([id,label])=>`<a href="#/${id}" data-nav="${id}">${label}</a>`).join('')}</nav><div class="top-actions"><button class="icon-btn" data-action="search" aria-label="Search lessons, projects and components" title="Search ( / )">${icon('search')}</button><button class="icon-btn" data-action="theme-mode" aria-label="Toggle light and dark appearance" title="Toggle appearance">${icon(S.mode==='dark'?'sun':'moon')}</button><a class="icon-btn" href="#/settings" aria-label="Customize workspace" title="Customize">${icon('settings')}</a><span class="avatar" title="Your local learner profile">${esc((S.name||'Learner').slice(0,2).toUpperCase())}</span></div>`;}
+function header(){const nav=[['home','Overview'],['learn','Learn'],['build','Build'],['sandbox','Simulate'],['code','Code'],['atlas','Explore'],['library','Library']];$('#header').innerHTML=`<a class="brand" href="#/home" aria-label="Kinetic home"><span class="brand-icon">${icon('chip')}</span><span>kinetic<em>Robotics studio</em></span></a><nav class="nav" aria-label="Main navigation">${nav.map(([id,label])=>`<a href="#/${id}" data-nav="${id}">${label}</a>`).join('')}</nav><div class="top-actions"><button class="icon-btn" data-action="search" aria-label="Search lessons, projects and components" title="Search ( / )">${icon('search')}</button><button class="icon-btn" data-action="theme-mode" aria-label="Toggle light and dark appearance" title="Toggle appearance">${icon(S.mode==='dark'?'sun':'moon')}</button><a class="icon-btn" href="#/settings" aria-label="Customize workspace" title="Customize">${icon('settings')}</a><span class="avatar" title="Your local learner profile">${esc((S.name||'Learner').slice(0,2).toUpperCase())}</span></div>`;}
 const footer=()=>`<footer class="footer"><span>Made for curious minds. Built around evidence.<br><span class="muted">Local-first learning studio &middot; Teaching models, not safety-certified systems.</span></span><div class="row wrap"><a href="#/lesson/sources">Sources &amp; boundaries</a><a href="#/settings">Your workspace</a><button class="btn quiet small" data-action="export-progress">Export progress ${icon('download')}</button></div></footer>`;
 const crumb=(label,parent)=>`<div class="crumb"><a href="#/home">Workspace</a><span>/</span>${parent?`<a href="#/${parent[0]}">${esc(parent[1])}</a><span>/</span>`:''}<span>${esc(label)}</span></div>`;
 const heading=(title,desc,actions='')=>`<div class="page-heading"><div><h1>${title}</h1>${desc?`<p>${desc}</p>`:''}</div><div class="actions">${actions}</div></div>`;
-const reviewed=()=>Object.values(S.complete).filter(Boolean).length;
+const reviewed=()=>D.lessons.filter(l=>S.complete[l.id]).length;
 const percent=ids=>Math.round(ids.filter(id=>S.complete[id]).length/Math.max(ids.length,1)*100);
 const simArt=id=>({circuit:'circuit',pid:'pid',rover:'rover',arm:'arm',path:'path',rl:'rl'})[id]||'chip';
 function moduleCard(m){return `<a class="module-card" href="#/module/${m.id}"><div class="module-art ${m.color}"><span class="module-no">MODULE ${m.id}</span>${Visuals.art(simArt(m.sim))}<span class="module-count">${m.lessons.length} lessons</span></div><div class="module-body"><h3>${esc(m.title)}</h3><p>${esc(m.subtitle)}</p><div class="module-meta"><span>${percent(m.lessons)}% reviewed</span>${icon('arrow')}</div><div class="progress-bar"><i style="width:${percent(m.lessons)}%"></i></div></div></a>`;}
 function projectCard(p){return `<a class="project-card" href="#/project/${p.id}/0"><div class="project-visual ${M(p.module)?.color||''}"><span class="project-num">BUILD ${String(p.number).padStart(2,'0')}</span><span class="badge">${esc(p.level)}</span>${Visuals.art(simArt(p.sim))}</div><div class="project-copy"><h3>${esc(p.title)}</h3><p>${esc(p.intro)}</p><div class="row between"><span class="muted small">${esc(p.type)} &middot; 5 guided stages</span>${icon('arrow')}</div></div></a>`;}
 function robotMarkup(){return `<div class="hero-lab"><canvas class="scene-canvas" tabindex="0" aria-label="Interactive conceptual desk robot. Drag to rotate. Use arrow keys to rotate; E to explode."></canvas><div class="scene-top"><span class="badge">YOUR FIRST DESK COMPANION</span><span class="badge">Interactive 3D</span></div><div class="scene-tooltip" hidden></div><div class="scene-bottom"><div class="segmented"><button class="active" data-scene="shell">Whole</button><button data-scene="inside">Inside</button><button data-scene="exploded">Exploded</button></div><span class="scene-label">Drag to explore</span></div></div>`;}
 function mountRobot(){const cv=$('.scene-canvas');if(!cv)return;currentScene=new Visuals.RobotScene(cv,{motion:!reduced(),onPart:part=>{const el=$('.scene-tooltip');if(!el)return;el.hidden=!part;if(part)el.innerHTML=`<strong>${esc(part.name)}</strong>${esc(part.text)}`;}});$$('[data-scene]').forEach(b=>b.addEventListener('click',()=>{currentScene.setMode(b.dataset.scene);$$('[data-scene]').forEach(q=>q.classList.toggle('active',q===b));}));}
-function home(){const last=L(S.lastLesson)||L('engineering-method');return `${crumb('Your learning workspace')}<div class="hero-grid"><section class="hero-copy"><span class="kicker"><i class="dot"></i> Less watching. More making.</span><h1>A little curiosity.<br>A lot of <span>possibility.</span></h1><p class="intro">Discover a component. Bring a circuit to life. Teach a robot to move. One small, understandable experiment at a time.</p><div class="actions"><a class="btn primary" href="#/lesson/${last.id}">${reviewed()?'Continue learning':'Start from zero'} ${icon('arrow')}</a><a class="btn quiet" href="#/learn">Explore the path</a></div><div class="mini-stats"><div><strong>12</strong><span>connected modules</span></div><div><strong>20</strong><span>guided projects</span></div><div><strong>6</strong><span>live browser labs</span></div></div></section>${robotMarkup()}<aside class="hero-side"><div class="daily-card"><div class="row between"><span class="caps">5-MINUTE DISCOVERY</span>${icon('spark')}</div><h3>Can you make the LED glow safely?</h3><p>Change one resistor. See current change. Understand the wire before writing the code.</p><a class="btn" href="#/sandbox/circuit">Try it now ${icon('play')}</a></div><div class="journey-card"><div class="row between"><span class="caps muted">YOUR JOURNEY</span><strong>${reviewed()} / ${D.lessons.length}</strong></div><div class="progress-bar"><i style="width:${percent(D.lessons.map(l=>l.id))}%"></i></div><p>Lessons reviewed. Real competence grows through building and explaining.</p></div></aside></div><p class="note muted" style="margin:9px 0 0;text-align:center">The rotatable robot is an original concept model, not a photograph or manufacturing-ready CAD. Real source photographs are in Explore.</p><div class="section-heading"><div><h2>What will you discover today?</h2><p>Four doors into the same connected learning journey.</p></div><a class="btn quiet small" href="#/settings">Make it yours ${icon('settings')}</a></div><div class="launch-grid">${[['chip','mint','atlas','Meet the components','51 real-source visuals'],['build','peach','build','Build something useful','From parts to working evidence'],['lab','blue','sandbox','Play with the physics','Change it. Predict it. Measure it.'],['code','','code','Make the code work','Run JavaScript; explore Python']].map(([ic,col,url,title,desc])=>`<a class="launch-card" href="#/${url}"><span class="tile-icon ${col}">${icon(ic)}</span><div><h3>${title}</h3><p>${desc}</p></div></a>`).join('')}</div><div class="section-heading"><div><h2>Start small. Build a strong foundation.</h2><p>A path from the first circuit to systems you can reason about.</p></div><a class="btn quiet small" href="#/learn">All 12 modules ${icon('arrow')}</a></div><div class="module-grid home-grid">${D.modules.slice(0,4).map(moduleCard).join('')}</div><div class="section-heading"><div><h2>Not just a tutorial. A project you understand.</h2><p>See the purpose, inspect the parts, connect, program, and verify.</p></div><a class="btn quiet small" href="#/build">All projects ${icon('arrow')}</a></div><div class="project-grid home-grid">${[D.projects[0],D.projects[8],D.projects[11],D.projects[18]].map(projectCard).join('')}</div>`;}
-function learn(){return `${crumb('Learning path')}${heading('A path, not a pile of tutorials.','Build physical intuition first. Add mathematics, software, autonomy and product judgment in a deliberate sequence.',`<button class="btn" data-action="scope">${icon('grid')} Degree-inspired scope</button>`)}<div class="course-header"><div><span class="kicker">BEGINNER TO ADVANCED PRACTICE</span><h2>Understand the whole robot.<br>One layer at a time.</h2><p>Each module connects an idea to a visual, an experiment and a project. The exit task asks you to produce evidence, not just tick a box.</p></div><div class="path-proof"><div class="proof-cell"><strong>61</strong>lessons &amp; labs</div><div class="proof-cell"><strong>20</strong>build journeys</div><div class="proof-cell"><strong>12</strong>evidence gates</div></div></div><div class="filters"><span class="muted small">Choose your starting point:</span>${[['beginner','Start from zero'],['software','I know software'],['advanced','Systems & research']].map(([id,label])=>`<button class="chip ${S.path===id?'active':''}" data-path="${id}">${label}</button>`).join('')}</div><div class="callout"><strong>${S.path==='software'?'Your software experience is useful.':S.path==='advanced'?'Use evidence to find your gaps.':'No robotics background assumed.'}</strong> ${S.path==='software'?'Focus first on power, measurement, actuators, sampling and physical failure. Do not skip the bench-safety and mechanics gates.':S.path==='advanced'?'Start with system identification, timing, fault injection and policy evaluation. Revisit a foundation whenever you cannot defend an assumption.':'Begin with Module 01, then the first circuit. Open the hover glossary whenever a new term interrupts your understanding.'}</div><div class="module-grid">${D.modules.map(moduleCard).join('')}</div><div class="quality-note"><strong>A broad learning map, not a degree replacement.</strong> University programs also require sustained mathematics, laboratory supervision, design reviews, electives and assessment. The scope view maps those disciplines to practice; it does not claim that reading these lessons grants senior-level competence.</div>`;}
+function home(){return StudioUI.home();}
+function learn(){return StudioUI.learn();}
 function scope(){dialog('The bigger picture',`<p class="muted">An eight-semester-inspired scope map. Use these outcomes to plan sustained practice, not as a claim of accredited equivalence.</p><div class="semester-grid">${D.semesters.map((s,i)=>`<div class="semester"><span class="semester-no">0${i+1}</span><div><h3>${esc(s.title)}</h3><p>${esc(s.topics)}</p><p class="evidence"><strong>Evidence to produce:</strong> ${esc(s.evidence)}</p><div class="actions">${s.modules.map(id=>`<a class="btn small" href="#/module/${id}" data-close>Module ${id}</a>`).join('')}</div></div></div>`).join('')}</div><p class="quality-note">Scope cross-checks: Carnegie Mellon's robotics curriculum, MIT Circuits and Underactuated Robotics, and Northwestern Modern Robotics. Open source syllabi and lectures are in the Library. Plan mathematics and hardware practice beyond this introductory content.</p>`);}
-function moduleView(id){const m=M(id)||D.modules[0];const ids=m.lessons.filter(id=>L(id));return `${crumb(m.title,['learn','Learning path'])}${heading(`Module ${m.id}. ${esc(m.title)}`,esc(m.subtitle),`<a class="btn primary" href="#/lesson/${ids.find(id=>!S.complete[id])||ids[0]}">Start module ${icon('arrow')}</a>`)}<div class="module-lessons"><div class="lesson-list">${ids.map((id,i)=>{const l=L(id);return `<a class="lesson-row" href="#/lesson/${id}"><span class="lesson-index ${S.complete[id]?'done':''}">${S.complete[id]?icon('check'):String(i+1).padStart(2,'0')}</span><div><h3>${esc(l.title)}</h3><p>${esc(l.intro)}</p></div><span class="status">${l.kind==='project'?'PROJECT':S.complete[id]?'REVIEWED':'LESSON'}</span>${icon('arrow')}</a>`;}).join('')}</div><aside class="sticky-panel"><div class="panel"><span class="kicker">SHOW YOUR UNDERSTANDING</span><h3>The exit task</h3><p class="muted">${esc(m.gate)}</p><div class="progress-bar"><i style="width:${percent(ids)}%"></i></div><p class="small muted">${percent(ids)}% of lessons marked reviewed</p><a class="btn primary" style="width:100%" href="#/sandbox/${m.sim}">Open the related lab ${icon('lab')}</a></div><div class="panel" style="margin-top:18px"><h4>Before moving on</h4><p class="small muted">Explain it without jargon. Reproduce one result. Save the inputs and outputs. Diagnose one deliberately introduced, safe failure.</p><a class="btn quiet small" href="#/library">Find a deeper reference ${icon('arrow')}</a></div></aside></div>`;}
+function moduleView(id,tab){return StudioUI.moduleView(id,tab);}
 function lessonView(id,tab='understand'){const l=L(id)||L('engineering-method'),m=M(l.module)||D.modules[0];S.lastLesson=l.id;save();const tabs=[['understand','Understand'],['practice','Try it'],['check','Check yourself'],['notes','My notes']];let body='';if(tab==='practice'){body=`<div class="lab-challenge"><div><span class="caps">FROM READING TO DOING</span><h3>Make one prediction before you run.</h3><p>Write the expected outcome, change one variable, and compare measured evidence with your prediction.</p></div><a class="btn primary" href="#/sandbox/${l.sim||m.sim}">Open live lab ${icon('lab')}</a></div>${l.steps.length?`<h3>Your practical sequence</h3><div class="checklist">${l.steps.map((s,i)=>`<label><input type="checkbox" data-check="${l.id}-${i}" ${S.checks[l.id+'-'+i]?'checked':''}><span>${esc(s)}</span></label>`).join('')}</div>`:'<p>Open the related lab, change one parameter, and export the result. Write a short explanation of the model assumptions. These are learning exercises, not hardware qualification.</p>'}${l.kind==='project'?`<a class="btn" href="#/project/${l.id}/0">Open five-stage build journey ${icon('arrow')}</a>`:''}`;}else if(tab==='check'){body=l.quizzes.length?l.quizzes.map((q,i)=>quizHTML(q,l.id,i)).join(''):`<h3>Explain, demonstrate, diagnose.</h3><p>Use the questions in the lesson as an oral engineering review. A defensible answer states assumptions, units, boundary conditions and failure behavior.</p><div class="quiz-card"><h3>Teach this concept in three sentences.</h3><p>What problem does it solve? What evidence shows it works? What could invalidate your conclusion?</p><textarea data-note="teach-${l.id}" rows="6" style="width:100%" placeholder="My explanation...">${esc(S.notes['teach-'+l.id]||'')}</textarea><p class="note muted">Saved locally as you type. This reflection is not automatically graded.</p></div>`;}else if(tab==='notes'){body=`<h3>Your engineering notebook</h3><p class="muted">Capture what you observed, not only what you intended.</p><textarea data-note="${l.id}" rows="17" style="width:100%" placeholder="Question / hypothesis\nSetup and versions\nPrediction\nMeasurements and units\nWhat failed?\nWhat would I change?">${esc(S.notes[l.id]||'')}</textarea><div class="actions" style="margin-top:14px"><button class="btn" data-action="export-note" data-id="${l.id}">Export note ${icon('download')}</button></div><p class="note muted">Stored on this browser only. Export your notebook to back it up.</p>`;}else body=l.body;
  return `${crumb(l.title,['module/'+m.id,'Module '+m.id])}<div class="lesson-layout"><aside class="lesson-nav"><a class="caps" href="#/module/${m.id}">MODULE ${m.id}</a><h3>${esc(m.title)}</h3>${m.lessons.filter(id=>L(id)).map((id,i)=>`<a class="${id===l.id?'active':''}" href="#/lesson/${id}"><span>${S.complete[id]?'\u2713':String(i+1).padStart(2,'0')}</span>${esc(L(id).title)}</a>`).join('')}<div class="quality-note">Learn the idea. Try it. Explain it.<br><a href="#/atlas">Explore real components</a></div></aside><section class="reader"><div class="reader-heading"><div class="row between wrap"><span class="kicker">${l.kind==='project'?'PROJECT LESSON':'LEARNING STUDIO'} / ${m.id}</span><div class="actions"><button class="btn quiet small" data-action="narrate">${icon('volume')} Read aloud</button><button class="btn quiet small" data-action="focus">${icon('fullscreen')} Focus</button></div></div><h1>${esc(l.title)}</h1><p>${esc(l.intro)}</p></div><nav class="reader-tabs" aria-label="Lesson tabs">${tabs.map(([key,label])=>`<a class="${tab===key?'active':''}" href="#/lesson/${l.id}/${key}">${label}</a>`).join('')}</nav><article class="article" id="lesson-body">${body}</article><div class="lesson-bottom"><button class="btn ${S.complete[l.id]?'':'primary'}" data-action="complete" data-id="${l.id}">${icon('check')} ${S.complete[l.id]?'Reviewed - mark unread':'Mark reviewed'}</button><span class="small muted">Reading progress, not certification.</span><a class="btn quiet small" href="#/lesson/${nextLesson(l.id)}">Next lesson ${icon('arrow')}</a></div></section><aside class="notes-panel"><span class="caps muted">YOUR EXPERIMENT</span><h4 style="margin-top:13px">The useful question</h4><p class="small muted">What would change the result, and how would you know?</p><a class="btn small" href="#/sandbox/${l.sim||m.sim}">Try the model ${icon('lab')}</a><hr style="border:0;border-top:1px solid var(--line);margin:22px 0"><h4>Scratchpad</h4><textarea data-note="scratch-${l.id}" rows="8" style="width:100%;font-size:12px" placeholder="A prediction, a measurement, an unfamiliar word...">${esc(S.notes['scratch-'+l.id]||'')}</textarea><p class="note muted">Saved automatically on this device.</p>${l.refs.length?`<h4 style="margin-top:24px">Go to the source</h4>${l.refs.slice(0,3).map(r=>`<p class="small">${link(r.url,esc(r.label))}</p>`).join('')}`:''}</aside></div>`;
 }
@@ -331,11 +1357,11 @@ function speak(text,el){if(!('speechSynthesis'in window)){toast('Speech synthesi
 const glossary={GPIO:'General-purpose input/output: a configurable signal pin, not a motor power supply.',PWM:'Pulse-width modulation: change how long a digital signal stays high in each cycle.',PID:'A feedback controller combining present error, accumulated error and the rate of change.',torque:'A turning effect. Torque depends on force and distance from the joint axis.',odometry:'Estimating motion by accumulating small measured movements; errors accumulate too.',URDF:'Unified Robot Description Format: an XML description of links and joints.',MJCF:'MuJoCo model format: describes a physical model for the MuJoCo engine.',SDF:'Simulation Description Format: describes simulation worlds, models, sensors and systems.',latency:'Delay between an event and its observable response. Average delay alone can hide unsafe worst cases.',calibration:'Comparing a measurement or model with known references and estimating correction parameters.',SLAM:'Simultaneous localization and mapping: estimate a map and the robot location within it.',kinematics:'The geometry of motion without calculating the forces that cause it.'};
 function enrichGlossary(){const el=$('#lesson-body');if(!el)return;const used=new Set(),walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT),nodes=[];while(walker.nextNode()){const n=walker.currentNode;if(!n.parentElement.closest('a,button,code,pre,h1,h2,h3,h4,summary,script,style,textarea')&&n.textContent.trim())nodes.push(n);}for(const n of nodes){let text=n.textContent;const pattern=new RegExp('\\b('+Object.keys(glossary).join('|')+')\\b','gi');let match,parts=[],last=0;while((match=pattern.exec(text))){const key=Object.keys(glossary).find(k=>k.toLowerCase()===match[0].toLowerCase());if(used.has(key))continue;used.add(key);parts.push(document.createTextNode(text.slice(last,match.index)));const b=document.createElement('span');b.className='glossary-term';b.tabIndex=0;b.textContent=match[0];const tip=document.createElement('span');tip.className='glossary-tip';tip.textContent=glossary[key];b.appendChild(tip);parts.push(b);last=match.index+match[0].length;}if(parts.length){parts.push(document.createTextNode(text.slice(last)));const frag=document.createDocumentFragment();parts.forEach(p=>frag.appendChild(p));n.replaceWith(frag);}}}
 function addResource(){dialog('A useful source worth keeping',`<form id="resource-form"><div class="form-field"><label for="resource-title">Title</label><input id="resource-title" required maxlength="120" placeholder="A course, repository or build log"></div><div class="form-field"><label for="resource-url">Source URL</label><input id="resource-url" type="url" required placeholder="https://..."></div><div class="form-field"><label for="resource-why">What will you learn or build?</label><textarea id="resource-why" rows="3" maxlength="800"></textarea></div><button class="btn primary" type="submit">Save to my library</button></form>`);$('#resource-form').addEventListener('submit',e=>{e.preventDefault();const url=safeURL($('#resource-url').value);if(url==='#'){toast('Use a valid http or https source URL.');return;}S.custom.push({title:$('#resource-title').value,url,why:$('#resource-why').value,type:'Your resource'});S.custom=S.custom.slice(-100);save();closeDialog();render(true);toast('Resource saved to your local library.');});}
-function importProgress(){const input=document.createElement('input');input.type='file';input.accept='.json,application/json';input.onchange=async()=>{const f=input.files[0];if(!f)return;if(f.size>5000000){toast('This file is too large. Use a Kinetic progress JSON under 5 MB.');return;}try{const o=JSON.parse(await f.text());if(o.version!==1||typeof o.complete!=='object'||typeof o.notes!=='object')throw Error('Not a compatible Kinetic progress export.');const n={...defaults};n.name=String(o.name||'Learner').slice(0,40);if(['violet','ocean','ember'].includes(o.theme))n.theme=o.theme;if(['dark','light'].includes(o.mode))n.mode=o.mode;if(['auto','full','reduced'].includes(o.motion))n.motion=o.motion;n.scale=Math.max(.85,Math.min(1.25,Number(o.scale)||1));n.rate=Math.max(.7,Math.min(1.5,Number(o.rate)||1));n.hours=Math.max(1,Math.min(40,Number(o.hours)||6));if(['beginner','software','advanced'].includes(o.path))n.path=o.path;if(L(o.lastLesson))n.lastLesson=o.lastLesson;for(const k of ['complete','quizzes','notes','checks']){n[k]={};for(const [id,v]of Object.entries(o[k]||{}).slice(0,3000)){if(['__proto__','prototype','constructor'].includes(id))continue;if(k==='notes')n[k][id]=String(v).slice(0,50000);else if(k==='quizzes'&&Number.isInteger(v)&&v>=0&&v<20)n[k][id]=v;else if(k==='complete'||k==='checks')n[k][id]=!!v;}}n.drafts={};if(o.drafts?.active&&typeof o.drafts.active.text==='string')n.drafts.active={text:o.drafts.active.text.slice(0,200000),lang:['javascript','python','native'].includes(o.drafts.active.lang)?o.drafts.active.lang:'native',name:'Imported draft'};n.custom=(Array.isArray(o.custom)?o.custom:[]).slice(0,100).filter(r=>safeURL(r.url)!=='#').map(r=>({title:String(r.title).slice(0,120),url:safeURL(r.url),why:String(r.why||'').slice(0,800),type:'Your resource'}));S=n;editorDraft=null;save();appearance();header();render();toast('Progress imported. Your local workspace has been restored.');}catch(e){toast('Import failed: '+e.message);}};input.click();}
+function importProgress(){const input=document.createElement('input');input.type='file';input.accept='.json,application/json';input.onchange=async()=>{const f=input.files[0];if(!f)return;if(f.size>5000000){toast('This file is too large. Use a Kinetic progress JSON under 5 MB.');return;}try{const o=JSON.parse(await f.text());if(o.version!==1||typeof o.complete!=='object'||typeof o.notes!=='object')throw Error('Not a compatible Kinetic progress export.');const n={...defaults};n.name=String(o.name||'Learner').slice(0,40);if(['violet','ocean','ember'].includes(o.theme))n.theme=o.theme;if(['dark','light'].includes(o.mode))n.mode=o.mode;if(['auto','full','reduced'].includes(o.motion))n.motion=o.motion;n.scale=Math.max(.85,Math.min(1.25,Number(o.scale)||1));n.rate=Math.max(.7,Math.min(1.5,Number(o.rate)||1));n.hours=Math.max(1,Math.min(40,Number(o.hours)||6));if(['beginner','software','advanced'].includes(o.path))n.path=o.path;if(L(o.lastLesson))n.lastLesson=o.lastLesson;for(const k of ['complete','quizzes','notes','checks']){n[k]={};for(const [id,v]of Object.entries(o[k]||{}).slice(0,3000)){if(['__proto__','prototype','constructor'].includes(id))continue;if(k==='notes')n[k][id]=String(v).slice(0,50000);else if(k==='quizzes'&&Number.isInteger(v)&&v>=0&&v<20)n[k][id]=v;else if(k==='complete'||k==='checks')n[k][id]=!!v;}}n.dashboard=StudioUI.sanitize(o.dashboard);n.drafts={};if(o.drafts?.active&&typeof o.drafts.active.text==='string')n.drafts.active={text:o.drafts.active.text.slice(0,200000),lang:['javascript','python','native'].includes(o.drafts.active.lang)?o.drafts.active.lang:'native',name:'Imported draft'};n.custom=(Array.isArray(o.custom)?o.custom:[]).slice(0,100).filter(r=>safeURL(r.url)!=='#').map(r=>({title:String(r.title).slice(0,120),url:safeURL(r.url),why:String(r.why||'').slice(0,800),type:'Your resource'}));S=n;editorDraft=null;save();appearance();header();render();toast('Progress imported. Your local workspace has been restored.');}catch(e){toast('Import failed: '+e.message);}};input.click();}
 function importCode(){const input=document.createElement('input');input.type='file';input.accept='.js,.py,.cpp,.c,.h,.xml,.sdf,.urdf,.txt';input.onchange=async()=>{const f=input.files[0];if(!f)return;if(f.size>250000){toast('Use a source file smaller than 250 KB.');return;}editorDraft={name:f.name,text:await f.text(),lang:f.name.endsWith('.js')?'javascript':f.name.endsWith('.py')?'python':'native'};S.drafts.active=editorDraft;save();render();};input.click();}
 function setEditorFromProject(key){const [id,n]=key.split(':'),source=L(id)?.code[Number(n)];if(!source)return;editorDraft={name:source.title,text:source.text,lang:'native'};S.drafts.active=editorDraft;save();location.hash='/code';toast('Native project source opened for inspection and download. Choose an appropriate local toolchain to execute it.');}
-function render(preserve=false){const y=preserve?scrollY:0;dispose();routeToken++;const fragment=location.hash.replace(/^#\/?/,'')||'home';route=fragment.split('/').map(s=>{try{return decodeURIComponent(s);}catch{return s;}});const [view,id,sub]=route;let html;switch(view){case 'learn':html=learn();break;case 'module':html=moduleView(id);break;case 'lesson':html=lessonView(id,sub);break;case 'build':html=buildView(id||'All');break;case 'project':html=projectView(id,sub);break;case 'sandbox':html=sandbox(Labs.names[id]?id:'pid');break;case 'code':html=editor();break;case 'atlas':html=atlas(id||'All',sub||'');break;case 'asset':html=assetView(id);break;case 'library':html=library();break;case 'settings':html=settings();break;default:html=home();}
- $('#app').innerHTML=html+footer();$('#app').classList.remove('full-screen','sim-focused');$('#app').classList.add('slide-in');setTimeout(()=>$('#app')?.classList.remove('slide-in'),350);const nav={home:'',learn:'learn',module:'learn',lesson:'learn',build:'build',project:'build',sandbox:'sandbox',code:'code',atlas:'atlas',asset:'atlas',library:'library',settings:''}[view]||'';$$('[data-nav]').forEach(a=>{a.classList.toggle('active',a.dataset.nav===nav);if(a.dataset.nav===nav)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});document.title=(view==='home'?'Welcome':view==='lesson'?L(id)?.title||'Lesson':view.charAt(0).toUpperCase()+view.slice(1))+' | Kinetic Robotics Studio';mountRobot();hydrateMedia();enrichGlossary();if(view==='sandbox'){currentLab=new Labs.Lab($('#lab-container'),Labs.names[id]?id:'pid',{onChange:(event,v)=>{if(event==='message')dialog('Reason from the model',`<p style="font-size:17px;line-height:1.8">${esc(v)}</p>`);if(event==='note'){S.notes['lab-'+v.key]=v.text;save();toast('Experiment note saved.');}if(event==='export')download(v.name,v.content);}});$('.lab-note').value=S.notes['lab-'+currentLab.type]||'';}
+function render(preserve=false){const y=preserve?scrollY:0;dispose();routeToken++;const fragment=location.hash.replace(/^#\/?/,'')||'home';route=fragment.split('/').map(s=>{try{return decodeURIComponent(s);}catch{return s;}});const [view,id,sub]=route;let html;switch(view){case 'learn':html=learn();break;case 'module':html=moduleView(id,sub);break;case 'lesson':html=lessonView(id,sub);break;case 'build':html=buildView(id||'All');break;case 'project':html=projectView(id,sub);break;case 'sandbox':html=sandbox(Labs.names[id]?id:'pid');break;case 'code':html=editor();break;case 'atlas':html=atlas(id||'All',sub||'');break;case 'asset':html=assetView(id);break;case 'library':html=library();break;case 'settings':html=settings();break;default:html=home();}
+ $('#app').innerHTML=html+footer();document.body.dataset.view=view;cleanup.push(StudioUI.mount(view,render));$('#app').classList.remove('full-screen','sim-focused');$('#app').classList.add('slide-in');setTimeout(()=>$('#app')?.classList.remove('slide-in'),350);const nav={home:'home',learn:'learn',module:'learn',lesson:'learn',build:'build',project:'build',sandbox:'sandbox',code:'code',atlas:'atlas',asset:'atlas',library:'library',settings:''}[view]||'';$$('[data-nav]').forEach(a=>{a.classList.toggle('active',a.dataset.nav===nav);if(a.dataset.nav===nav)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});document.title=(view==='home'?'Welcome':view==='lesson'?L(id)?.title||'Lesson':view.charAt(0).toUpperCase()+view.slice(1))+' | Kinetic Robotics Studio';mountRobot();hydrateMedia();enrichGlossary();if(view==='sandbox'){currentLab=new Labs.Lab($('#lab-container'),Labs.names[id]?id:'pid',{onChange:(event,v)=>{if(event==='message')dialog('Reason from the model',`<p style="font-size:17px;line-height:1.8">${esc(v)}</p>`);if(event==='note'){S.notes['lab-'+v.key]=v.text;save();toast('Experiment note saved.');}if(event==='export')download(v.name,v.content);}});$('.lab-note').value=S.notes['lab-'+currentLab.type]||'';}
  if(guidedProject&&view==='project'&&id===guidedProject){if(Number(sub||0)<4)autoSlide=setTimeout(()=>{location.hash='/project/'+id+'/'+(Number(sub||0)+1);},15000);else{guidedProject=null;toast('Tour finished. Repeat the steps at your own pace and save real evidence.');}}else guidedProject=null;if(view==='code')initEditor();if(view==='atlas'){const input=$('#asset-search');input.addEventListener('input',()=>{const q=input.value.toLowerCase();$$('.asset-card').forEach(card=>card.hidden=!card.textContent.toLowerCase().includes(q));});}if($('#modal').open)closeDialog();window.scrollTo({top:y,behavior:'instant'});}
 document.addEventListener('click',async e=>{const close=e.target.closest('[data-close]');if(close){closeDialog();return;}const action=e.target.closest('[data-action]');if(action){const a=action.dataset.action;
  if(a==='search')openSearch();if(a==='theme-mode'){S.mode=S.mode==='dark'?'light':'dark';save();appearance();header();}if(a==='scope')scope();if(a==='slideshow'){guidedProject=guidedProject===route[1]?null:route[1];render(true);if(guidedProject)toast('Guided slides: the next stage opens every 15 seconds. Pause or press Escape to stop.');}if(a==='lab-focus')$('#app').classList.toggle('sim-focused');if(a==='export-progress')download('kinetic-learning-progress.json',JSON.stringify(S,null,2));if(a==='import-progress')importProgress();if(a==='add-resource')addResource();if(a==='voice-test')speak('Welcome to your robotics workshop. Start with one question. Make a prediction, run a safe experiment, and explain the evidence.');if(a==='narrate'){const el=$('#lesson-body');speak(el?.innerText||'',el);}if(a==='narrate-inspect'){const el=$('.inspect-panel');speak(el?.innerText||'',el);}if(a==='narrate-stage'){const el=$('.stage-body');speak(el?.innerText||'',el);}if(a==='focus')$('#app').classList.toggle('full-screen');if(a==='complete'){const id=action.dataset.id;S.complete[id]=!S.complete[id];save();render(true);toast(S.complete[id]?'Lesson marked reviewed. Keep the evidence for your practical work.':'Lesson marked unread.');}if(a==='export-note')download(action.dataset.id+'-notes.md',S.notes[action.dataset.id]||'', 'text/markdown');if(a==='run-code')runCode();if(a==='stop-code')stopCode();if(a==='import-code')importCode();if(a==='export-code'){const lang=$('#code-lang').value;download('kinetic-experiment.'+(lang==='javascript'?'js':lang==='python'?'py':'txt'),$('#code-input').value,'text/plain');}if(a==='editor-from-block'){const details=action.closest('.code');editorDraft={text:$('pre',details)?.textContent||'',lang:'native',name:'Native source'};S.drafts.active=editorDraft;save();location.hash='/code';}}
@@ -359,8 +1385,9 @@ document.addEventListener('change',e=>{if(e.target.dataset.check){S.checks[e.tar
 document.addEventListener('keydown',e=>{const editing=['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName)||document.activeElement?.isContentEditable;if(e.key==='/'&&!editing){e.preventDefault();openSearch();}if(e.key==='Escape'){guidedProject=null;clearInterval(autoSlide);window.speechSynthesis?.cancel();$$('.reading-active').forEach(el=>el.classList.remove('reading-active'));if($('#modal').open)closeDialog();$('#app').classList.remove('full-screen','sim-focused');}});
 $('#modal').addEventListener('click',e=>{if(e.target===$('#modal')){const r=$('#modal').getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeDialog();}});
 $('#modal').addEventListener('cancel',()=>{$('#modal').querySelectorAll('video').forEach(v=>v.pause());});
+const StudioUI=window.KineticDashboard.create({data:D,state:()=>S,save,icon,esc,reduced,dialog,toast,robotMarkup});
 window.addEventListener('hashchange',()=>render());appearance();header();render();
-window.KineticDebug={state:()=>S,route:()=>route,lab:()=>currentLab,engine:Engine,counts:()=>({modules:D.modules.length,lessons:D.lessons.length,projects:D.projects.length,assets:D.assets.length})};
+window.KineticDebug={dashboard:()=>StudioUI.state(),state:()=>S,route:()=>route,lab:()=>currentLab,engine:Engine,counts:()=>({modules:D.modules.length,lessons:D.lessons.length,projects:D.projects.length,assets:D.assets.length})};
 })();
 </script>
 </body></html>

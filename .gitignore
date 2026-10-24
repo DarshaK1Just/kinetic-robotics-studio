@@ -22,3 +22,6 @@ coverage/
 playwright-report/
 test-results/
 .tmp/
+
+# Local browser screenshots and test fixtures
+qa/

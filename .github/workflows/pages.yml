@@ -35,6 +35,7 @@ jobs:
           node --check src/engine.js
           node --check src/labs.js
           node --check src/scene.js
+          node --check src/dashboard.js
           python3 - <<'PY'
           from pathlib import Path
           import xml.etree.ElementTree as ET
@@ -43,8 +44,8 @@ jobs:
                   ET.parse(file)
           print('Model XML is well-formed')
           PY
-      - name: Run engine tests
-        run: node --test tests/engine.test.js
+      - name: Run engine and dashboard tests
+        run: node --test tests/*.test.js
       - name: Assemble production page
         run: python3 build.py --output dist/index.html
       - name: Check production page

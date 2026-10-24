@@ -34,7 +34,7 @@ with sync_playwright() as p:
  failedmodules=[]
  for m in DATA['modules']:
   go('/module/'+m['id'])
-  if page.locator('.lesson-row').count()!=len(m['lessons']):failedmodules.append(m['id'])
+  if page.locator('.ks-path-lesson').count()!=len(m['lessons']):failedmodules.append(m['id'])
  check('All 12 modules have the intended lesson sequence',lambda:not failedmodules)
  go('/code')
  for preset in ['circuit','pid','planner','learning']:
