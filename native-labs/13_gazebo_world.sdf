@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<sdf version="1.10">
+  <world name="labbook_world">
+    <physics name="1ms" type="ignored"><max_step_size>0.001</max_step_size><real_time_factor>1</real_time_factor></physics>
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <gravity>0 0 -9.81</gravity>
+    <light name="sun" type="directional"><pose>0 0 8 0 0 0</pose><diffuse>0.8 0.8 0.8 1</diffuse><direction>-0.5 0.1 -0.9</direction></light>
+    <model name="floor"><static>true</static><link name="link">
+      <collision name="collision"><geometry><plane><normal>0 0 1</normal><size>8 8</size></plane></geometry></collision>
+      <visual name="visual"><geometry><plane><normal>0 0 1</normal><size>8 8</size></plane></geometry></visual>
+    </link></model>
+    <model name="falling_cube"><pose>0 0 1 0 0 0</pose><link name="link">
+      <inertial><mass>0.2</mass><inertia><ixx>0.000333333</ixx><iyy>0.000333333</iyy><izz>0.000333333</izz></inertia></inertial>
+      <collision name="collision"><geometry><box><size>0.1 0.1 0.1</size></box></geometry></collision>
+      <visual name="visual"><geometry><box><size>0.1 0.1 0.1</size></box></geometry><material><diffuse>0.2 0.6 0.8 1</diffuse></material></visual>
+    </link></model>
+  </world>
+</sdf>

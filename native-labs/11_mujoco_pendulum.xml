@@ -1,0 +1,14 @@
+<mujoco model="labbook_pendulum">
+  <compiler angle="radian"/>
+  <option timestep="0.002" gravity="0 0 -9.81"/>
+  <worldbody>
+    <light pos="0 -2 3"/>
+    <geom name="floor" type="plane" size="2 2 0.1" rgba="0.9 0.9 0.9 1"/>
+    <body name="pivot" pos="0 0 1.2">
+      <joint name="hinge" type="hinge" axis="0 1 0" damping="0.02"/>
+      <geom name="rod" type="capsule" fromto="0 0 0 0 0 -0.6" size="0.025" mass="0.1"/>
+      <geom name="bob" type="sphere" pos="0 0 -0.6" size="0.06" mass="0.2"/>
+    </body>
+  </worldbody>
+  <actuator><motor name="torque" joint="hinge" ctrlrange="-0.4 0.4" ctrllimited="true"/></actuator>
+</mujoco>

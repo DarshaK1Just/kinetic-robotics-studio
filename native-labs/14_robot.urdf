@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<robot name="labbook_rover_visual">
+  <link name="base_link"><visual><geometry><box size="0.20 0.14 0.06"/></geometry></visual></link>
+  <link name="camera_link"><visual><geometry><box size="0.03 0.04 0.02"/></geometry></visual></link>
+  <joint name="camera_mount" type="fixed"><parent link="base_link"/><child link="camera_link"/><origin xyz="0.08 0 0.06" rpy="0 0 0"/></joint>
+</robot>

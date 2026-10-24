@@ -1,0 +1,24 @@
+# Generated publishing directory (GitHub Actions rebuilds it)
+dist/
+_site/
+# Python and Node caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+node_modules/
+.venv/
+venv/
+# User files and IDE settings
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.env
+.env.*
+!.env.example
+# Temporary assets / local experiments
+*.log
+coverage/
+playwright-report/
+test-results/
+.tmp/

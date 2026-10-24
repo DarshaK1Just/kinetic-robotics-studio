@@ -1,0 +1,74 @@
+name: Test and deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate Python, JS and robot model source
+        run: |
+          python3 -m compileall -q build.py serve.py scripts tests native-labs
+          node --check src/app.js
+          node --check src/engine.js
+          node --check src/labs.js
+          node --check src/scene.js
+          python3 - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          for file in Path('native-labs').rglob('*'):
+              if file.suffix in ('.urdf', '.sdf', '.xml'):
+                  ET.parse(file)
+          print('Model XML is well-formed')
+          PY
+      - name: Run engine tests
+        run: node --test tests/engine.test.js
+      - name: Assemble production page
+        run: python3 build.py --output dist/index.html
+      - name: Check production page
+        run: python3 scripts/check_site.py dist
+      - name: Disable Jekyll processing
+        run: touch dist/.nojekyll
+      - name: Publish build artifact for deployment
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
